@@ -2,7 +2,7 @@
   "name": "accessweather",
   "version": "1.0.0",
   "description": "A small application for accepting WeatherUnderground data from an Accurite Access device, storing the data in a SQLite Db and retrieving/displaying that data",
-  "main": "main.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
