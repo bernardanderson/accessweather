@@ -1,10 +1,14 @@
 var express = require("express");
-var WeatherData = require("./Models/WeatherData.js");
+var weatherData = require("./Models/WeatherData.js");
+var dbRepo = require("./DbRepo.js");
 var app = express();
+
+// Create Db
+dbRepo.initDb();
 
 app.get('/weatherstation/updateweatherstation.php', (req, res) => {
     var query = req.query;
-    let currentWeatherData = new WeatherData(query.baromin, query.humidity,
+    let currentWeatherData = new weatherData(query.baromin, query.humidity,
         query.tempf, query.windspeedmph, query.winddir, query.windgustmph, query.windgustdir,
         query.dewptf, query.dailyrainin, query.rainin);
 
