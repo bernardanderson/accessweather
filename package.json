@@ -9,6 +9,7 @@
   "author": "",
   "license": "GPL",
   "dependencies": {
+    "better-sqlite3": "^5.0.1",
     "express": "^4.16.4"
   }
 }

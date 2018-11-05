@@ -1,19 +1,19 @@
 var fs = require("fs");
-var sqlite3 = require('sqlite3').verbose();
+var Database = require('better-sqlite3');
 
 const createDb = `CREATE TABLE AccuriteAccessData (id INTEGER PRIMARY KEY, barometer NUMERIC NOT NULL, humidity NUMERIC NOT NULL, tempf NUMERIC NOT NULL,
     windspeed NUMERIC NOT NULL, winddir NUMERIC NOT NULL, windgust NUMERIC NOT NULL, windgustdir NUMERIC NOT NULL, dewpoint NUMERIC NOT NULL,
     dailyrain NUMERIC NOT NULL, totalrain NUMERIC NOT NULL);`
 
-let db = new sqlite3.Database("./accessweather.db", (err) => {
-    if (err) {
-        return console.error(err.message);
-    }
-    console.log("Database file present...");
-});
+let db = new Database("./accessweather.db", {});
 
 let initDb = function(dbFilePath) {
-    db.run(createDb);
+    try {
+        db.prepare(createDb).run();
+        console.info("The database was created...");
+    } catch(ex) {
+        console.info("The database already exists... continuing");
+    }
 }
  
 let RunSqlStatement = function(sqlStatement) {
