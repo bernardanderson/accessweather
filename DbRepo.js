@@ -1,46 +1,25 @@
-var fs = require("fs");
-var Database = require('better-sqlite3');
+const Database = require('better-sqlite3');
+const SqlCommands= require('./Constants/SqlCommands.js');
 
-const createDb = `CREATE TABLE AccuriteAccessData (id INTEGER PRIMARY KEY, barometer NUMERIC NOT NULL, humidity NUMERIC NOT NULL, tempf NUMERIC NOT NULL,
-    windspeed NUMERIC NOT NULL, winddir NUMERIC NOT NULL, windgust NUMERIC NOT NULL, windgustdir NUMERIC NOT NULL, dewpoint NUMERIC NOT NULL,
-    dailyrain NUMERIC NOT NULL, totalrain NUMERIC NOT NULL);`
+const db = new Database('./accessweather.db', {});
+const sqlCommands = new SqlCommands();
 
-let db = new Database("./accessweather.db", {});
-
-let initDb = function(dbFilePath) {
+let initDb = function() {
     try {
-        db.prepare(createDb).run();
-        console.info("The database was created...");
+        db.prepare(sqlCommands.intializeDataTable).run();
+        console.info("The database and the AccuriteAccessData Table was created.");
     } catch(ex) {
-        console.info("The database already exists... continuing");
+        console.info("The database and required tables already exist... continuing.");
     }
 }
- 
-let RunSqlStatement = function(sqlStatement) {
-    this.OpenDbConnection();
-    db.run(sqlStatement)
-    this.CloseDbConnection();
-}
 
-function OpenDbConnection() {
-    db = new sqlite3.Database(dbFile, (err) => {
-        if (err) {
-            return console.error(err.message);
-        }
-        console.log("Successfully connected to database");
-    });
-}
-
-function CloseDbConnection(){
-    db.close((err) => {
-        if (err) {
-            return console.error(err.message);
-        }
-        console.log('Close the database connection.');
-    });
+let insertWeatherdata = function(currentWeatherData) {
+    db.prepare(sqlCommands.insertWeatherdata).run(currentWeatherData.baromin, currentWeatherData.humidity, currentWeatherData.tempf, currentWeatherData.windspeedmph, currentWeatherData.winddir, 
+        currentWeatherData.windgustmph, currentWeatherData.windgustdir, currentWeatherData.dewptf, currentWeatherData.dailyrainin, currentWeatherData.rainin);
+    console.log('Insert into Db successfully completed');
 }
 
 module.exports = {
     initDb: initDb,
-    db: db
+    insertWeatherdata: insertWeatherdata
 }

@@ -1,19 +1,22 @@
 var express = require("express");
 var weatherData = require("./Models/WeatherData.js");
-var dbRepo = require("./DbRepo.js");
+var dbRepository = require("./DbRepo.js");
 var app = express();
 
-// Create Db
-dbRepo.initDb();
+// Initialize the Sqlite3 Database
+dbRepository.initDb();
 
 app.get('/weatherstation/updateweatherstation.php', (req, res) => {
-    var query = req.query;
-    let currentWeatherData = new weatherData(query.baromin, query.humidity,
-        query.tempf, query.windspeedmph, query.winddir, query.windgustmph, query.windgustdir,
-        query.dewptf, query.dailyrainin, query.rainin);
+    let currentWeatherData = new weatherData(req.query);
 
-    console.log(`This is from WeatherUnderground. The current time is ${new Date()} and the pressure is ${currentWeatherData.baromin}`);
+    try {
+        dbRepository.insertWeatherdata(currentWeatherData);
+    } catch (exception){
+        console.log('The insert of weather data into the Database failed with an exception');
+        console.log(exception);
+    }
+    // console.log(`This is from WeatherUnderground. The current time is ${new Date()} and the pressure is ${currentWeatherData.baromin}`);
     res.status(200).send("Success");
 })
 
-app.listen(7025, () => console.log('Example node API'));
+app.listen(7025, () => console.log('The AccuriteAccess Weather Data Application has started'));
