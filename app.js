@@ -8,7 +8,7 @@ dbRepository.initDb();
 
 app.get('/weatherstation/updateweatherstation.php', (req, res) => {
     let currentWeatherData = new weatherData(req.query);
-
+    
     try {
         dbRepository.insertWeatherdata(currentWeatherData);
     } catch (exception){
@@ -16,7 +16,13 @@ app.get('/weatherstation/updateweatherstation.php', (req, res) => {
         console.log(exception);
     }
     // console.log(`This is from WeatherUnderground. The current time is ${new Date()} and the pressure is ${currentWeatherData.baromin}`);
-    res.status(200).send("Success");
-})
+    res.status(200).send();
+});
 
+app.get('/weatherstation/getcurrentweather', (req, res) => {
+    let latestWeather = new weatherData(dbRepository.retrieveLatestWeatherdata());
+    res.status(200).send(latestWeather);
+});
+
+app.use(express.static('public'));
 app.listen(7025, () => console.log('The AccuriteAccess Weather Data Application has started'));

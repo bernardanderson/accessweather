@@ -19,7 +19,12 @@ let insertWeatherdata = function(currentWeatherData) {
     console.log('Insert into Db successfully completed');
 }
 
+let retrieveLatestWeatherdata = function() {
+    return db.prepare(sqlCommands._retrieveLatestWeatherData).get();
+}
+
 module.exports = {
     initDb: initDb,
-    insertWeatherdata: insertWeatherdata
+    insertWeatherdata: insertWeatherdata,
+    retrieveLatestWeatherdata: retrieveLatestWeatherdata
 }
