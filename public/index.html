@@ -7,71 +7,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <!-- <script src="main.js"></script> -->
 </head>
 <body>
-    <div class="container is-fluid ">
-        <div class="notification has-background-white">
-            <p class="has-text-centered has-text-weight-semibold is-size-1">Nov 6th 2018, 11:32:43 pm</p>
-            <p class="has-text-centered has-text-weight-semibold is-size-6">Last Updated: Nov 3rd 2018 11:24:00 am</p>
-            <hr class="hr-special"/>
+    <div id="app">
+        <div class="container is-fluid ">
+            <div class="notification has-background-white">
+                <p class="has-text-centered has-text-weight-semibold is-size-1">{{clock}}</p>
+                <p class="has-text-centered has-text-weight-semibold is-size-6">Last Updated: {{weather.time}} UTC</p>
+                <hr class="hr-special"/>
+            </div>
         </div>
-    </div>
-    <div class="modal">
-        <div class="modal-background"></div>
-        <div class="modal-content">
-            <figure class="tile image is-4by3">
-                <img src="http://images.intellicast.com/WxImages/Radar/bwg.gif">
-            </figure>
+        <div v-if="isModalActive" class="modal is-active">
+            <div class="modal-background"></div>
+            <div v-on:click="toggleModal" class="modal-content">
+                <figure class="tile image is-4by3">
+                    <img src="http://images.intellicast.com/WxImages/Radar/bwg.gif">
+                </figure>
+            </div>
         </div>
-        <button class="modal-close is-large" aria-label="close"></button>
-    </div>
-    <div class="tile is-ancestor">
-        <div class="tile is-vertical is-4">
-            <div class="tile">
-                <div class="tile is-parent">
-                    <article class="tile is-child notification has-background-white">
-                        <p class="has-text-centered has-text-weight-semibold less-bottom-margin small-font">Temperature</p>
-                        <p class="has-text-centered has-text-weight-semibold less-bottom-margin big-font">42<span class='small-font'>&deg;F</span></p>
-                        <hr class="hr-special"/>
-                        <p class="has-text-centered has-text-weight-semibold less-bottom-margin small-font">Humidity</p>
-                        <p class="has-text-centered has-text-weight-semibold less-bottom-margin big-font">42<span class='small-font'>%</span></p>
-                        <hr class="hr-special"/>
-                        <p class="has-text-centered has-text-weight-semibold less-bottom-margin small-font">Dewpoint</p>
-                        <p class="has-text-centered has-text-weight-semibold less-bottom-margin big-font">42<span class='small-font'>&deg;F</span></p>
-                    </article>  
+        <div class="tile is-ancestor">
+            <div class="tile is-vertical is-4">
+                <div class="tile">
+                    <div class="tile is-parent">
+                        <article class="tile is-child notification has-background-white">
+                            <p class="has-text-centered has-text-weight-semibold less-bottom-margin small-font">Temperature</p>
+                            <p class="has-text-centered has-text-weight-semibold less-bottom-margin big-font">{{weather.tempf}}<span class='small-font'>&deg;F</span></p>
+                            <hr class="hr-special"/>
+                            <p class="has-text-centered has-text-weight-semibold less-bottom-margin small-font">Humidity</p>
+                            <p class="has-text-centered has-text-weight-semibold less-bottom-margin big-font">{{weather.humidity}}<span class='small-font'>%</span></p>
+                            <hr class="hr-special"/>
+                            <p class="has-text-centered has-text-weight-semibold less-bottom-margin small-font">Dewpoint</p>
+                            <p class="has-text-centered has-text-weight-semibold less-bottom-margin big-font">{{weather.dewptf}}<span class='small-font'>&deg;F</span></p>
+                        </article>  
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="tile is-vertical is-4">
-            <div class="tile">
-                <div class="tile is-parent">
-                    <article class="tile is-child notification has-background-white">
-                        <p class="has-text-centered has-text-weight-semibold less-bottom-margin small-font">WindSpeed & Direction</p>
-                        <p class="has-text-centered has-text-weight-semibold less-bottom-margin big-font">42 <span class='small-font'>MPH</span></p>
-                        <p class="has-text-centered has-text-weight-semibold less-bottom-margin medium-font">NNE</p>
-                        <hr class="hr-dark" />
-                    <figure class="tile image is-4by3">
-                        <img src="http://images.intellicast.com/WxImages/Radar/bwg.gif">
-                    </figure>
-                </article>  
+            <div class="tile is-vertical is-4">
+                <div class="tile">
+                    <div class="tile is-parent">
+                        <article class="tile is-child notification has-background-white">
+                            <p class="has-text-centered has-text-weight-semibold less-bottom-margin small-font">WindSpeed & Direction</p>
+                            <p class="has-text-centered has-text-weight-semibold less-bottom-margin big-font">{{weather.windspeedmph}} <span class='small-font'>MPH</span></p>
+                            <p class="has-text-centered has-text-weight-semibold less-bottom-margin medium-font">{{weather.winddir}}</p>
+                            <hr class="hr-dark" />
+                            <figure class="tile image is-4by3">
+                                <img v-on:click="toggleModal" v-bind:src="weatherMapUrl">
+                            </figure>
+                        </article>  
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="tile is-vertical is-4">
-        <div class="tile">
-            <div class="tile is-parent">
-                <article class="tile is-child notification has-background-white">
-                        <p class="has-text-centered has-text-weight-semibold less-bottom-margin small-font">Rainfall</p>
-                        <p class="has-text-centered has-text-weight-semibold less-bottom-margin big-font">42 <span class='small-font'>in</span></p>
-                        <p class="has-text-centered has-text-weight-semibold less-bottom-margin is-size-4">Monthly: 42 in / Yearly: 42 in</p>
-                        <hr class="hr-dark" />
-                        <p class="has-text-centered has-text-weight-semibold less-bottom-margin small-font">Pressure</p>
-                        <p class="has-text-centered has-text-weight-semibold less-bottom-margin big-font">42 <span class='small-font'>in</span></p>
-                    </article>
+            <div class="tile is-vertical is-4">
+                <div class="tile">
+                    <div class="tile is-parent">
+                        <article class="tile is-child notification has-background-white">
+                            <p class="has-text-centered has-text-weight-semibold less-bottom-margin small-font">Rainfall</p>
+                            <p class="has-text-centered has-text-weight-semibold less-bottom-margin big-font">{{weather.rainin}} <span class='small-font'>in</span></p>
+                            <p class="has-text-centered has-text-weight-semibold less-bottom-margin is-size-4">Daily: {{weather.dailyrainin}} in</p>
+                            <hr class="hr-dark" />
+                            <p class="has-text-centered has-text-weight-semibold less-bottom-margin small-font">Pressure</p>
+                            <p class="has-text-centered has-text-weight-semibold less-bottom-margin big-font">{{weather.baromin}} <span class='small-font'>in</span></p>
+                        </article>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+<script src="main.js"></script>
 </html>
