@@ -10,59 +10,65 @@
     <!-- <script src="main.js"></script> -->
 </head>
 <body>
-    <article class="message">
-        <div class="message-header">
-            <p>AccuriteAccess Weather Monitor</p>
-        </div>
-    </article>
-    <div class="container is-fluid">
-        <div class="notification">
+    <div class="container is-fluid ">
+        <div class="notification has-background-white">
             <p class="has-text-centered has-text-weight-semibold is-size-1">Nov 6th 2018, 11:32:43 pm</p>
             <p class="has-text-centered has-text-weight-semibold is-size-6">Last Updated: Nov 3rd 2018 11:24:00 am</p>
+            <hr class="hr-special"/>
         </div>
+    </div>
+    <div class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <figure class="tile image is-4by3">
+                <img src="http://images.intellicast.com/WxImages/Radar/bwg.gif">
+            </figure>
+        </div>
+        <button class="modal-close is-large" aria-label="close"></button>
     </div>
     <div class="tile is-ancestor">
         <div class="tile is-vertical is-4">
             <div class="tile">
                 <div class="tile is-parent">
                     <article class="tile is-child notification has-background-white">
-                        <p class="has-text-centered has-text-weight-semibold is-size-2">Temperature</p>
-                        <p class="has-text-centered has-text-weight-semibold big-font">42&deg;F</p>
-                        <p class="has-text-centered has-text-weight-semibold is-size-2">Humidity</p>
-                        <p class="has-text-centered has-text-weight-semibold big-font">42%</p>
-                        <p class="has-text-centered has-text-weight-semibold is-size-2">Dewpoint</p>
-                        <p class="has-text-centered has-text-weight-semibold big-font">42&deg;F</p>
+                        <p class="has-text-centered has-text-weight-semibold less-bottom-margin small-font">Temperature</p>
+                        <p class="has-text-centered has-text-weight-semibold less-bottom-margin big-font">42<span class='small-font'>&deg;F</span></p>
+                        <hr class="hr-special"/>
+                        <p class="has-text-centered has-text-weight-semibold less-bottom-margin small-font">Humidity</p>
+                        <p class="has-text-centered has-text-weight-semibold less-bottom-margin big-font">42<span class='small-font'>%</span></p>
+                        <hr class="hr-special"/>
+                        <p class="has-text-centered has-text-weight-semibold less-bottom-margin small-font">Dewpoint</p>
+                        <p class="has-text-centered has-text-weight-semibold less-bottom-margin big-font">42<span class='small-font'>&deg;F</span></p>
                     </article>  
                 </div>
             </div>
         </div>
-        <div class="tile is-vertical is-8">
+        <div class="tile is-vertical is-4">
             <div class="tile">
                 <div class="tile is-parent">
                     <article class="tile is-child notification has-background-white">
-                        <p class="has-text-centered has-text-weight-semibold is-size-2">WindSpeed</p>
-                        <br/>
-                        <p class="has-text-centered has-text-weight-semibold medium-font">42 MPH</p>
-                        <p class="has-text-centered has-text-weight-semibold medium-font">NNE</p>
-                    </article>
-                    <article class="tile is-child notification has-background-white">
-                        <figure class="tile image is-child">
-                            <img src="http://images.intellicast.com/WxImages/Radar/bwg.gif">
-                        </figure>
-                    </article>
-                </div>
+                        <p class="has-text-centered has-text-weight-semibold less-bottom-margin small-font">WindSpeed & Direction</p>
+                        <p class="has-text-centered has-text-weight-semibold less-bottom-margin big-font">42 <span class='small-font'>MPH</span></p>
+                        <p class="has-text-centered has-text-weight-semibold less-bottom-margin medium-font">NNE</p>
+                        <hr class="hr-dark" />
+                    <figure class="tile image is-4by3">
+                        <img src="http://images.intellicast.com/WxImages/Radar/bwg.gif">
+                    </figure>
+                </article>  
             </div>
-            <div class="tile">
-                <div class="tile is-parent">
-                    <article class="tile is-child notification has-background-white">
-                        <p class="has-text-centered has-text-weight-semibold is-size-2">Pressure</p>
-                        <p class="has-text-centered has-text-weight-semibold big-font">42 in</p>
+        </div>
+    </div>
+    <div class="tile is-vertical is-4">
+        <div class="tile">
+            <div class="tile is-parent">
+                <article class="tile is-child notification has-background-white">
+                        <p class="has-text-centered has-text-weight-semibold less-bottom-margin small-font">Rainfall</p>
+                        <p class="has-text-centered has-text-weight-semibold less-bottom-margin big-font">42 <span class='small-font'>in</span></p>
+                        <p class="has-text-centered has-text-weight-semibold less-bottom-margin is-size-4">Monthly: 42 in / Yearly: 42 in</p>
+                        <hr class="hr-dark" />
+                        <p class="has-text-centered has-text-weight-semibold less-bottom-margin small-font">Pressure</p>
+                        <p class="has-text-centered has-text-weight-semibold less-bottom-margin big-font">42 <span class='small-font'>in</span></p>
                     </article>
-                    <article class="tile is-child notification has-background-white">
-                            <p class="has-text-centered has-text-weight-semibold is-size-2">Today's Rainfall</p>
-                            <p class="has-text-centered has-text-weight-semibold big-font">42 in</p>
-                            <p class="has-text-centered has-text-weight-semibold is-size-4">Monthly: 42 in / Yearly: 42 in</p>
-                    </article>  
                 </div>
             </div>
         </div>
