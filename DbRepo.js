@@ -16,7 +16,6 @@ let initDb = function() {
 let insertWeatherdata = function(currentWeatherData) {
     db.prepare(sqlCommands.insertWeatherdata).run(currentWeatherData.baromin, currentWeatherData.humidity, currentWeatherData.tempf, currentWeatherData.windspeedmph, currentWeatherData.winddir, 
         currentWeatherData.windgustmph, currentWeatherData.windgustdir, currentWeatherData.dewptf, currentWeatherData.dailyrainin, currentWeatherData.rainin);
-    console.log('Insert into Db successfully completed');
 }
 
 let retrieveLatestWeatherdata = function() {

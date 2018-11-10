@@ -9,7 +9,12 @@
   "author": "",
   "license": "GPL",
   "dependencies": {
+    "axios": "^0.18.0",
     "better-sqlite3": "^5.0.1",
-    "express": "^4.16.4"
+    "bulma": "^0.7.2",
+    "express": "^4.16.4",
+    "moment": "^2.22.2",
+    "vue": "^2.5.17",
+    "vue-echarts": "^3.1.3"
   }
 }

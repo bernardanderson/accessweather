@@ -15,7 +15,6 @@ app.get('/weatherstation/updateweatherstation.php', (req, res) => {
         console.log('The insert of weather data into the Database failed with an exception');
         console.log(exception);
     }
-    // console.log(`This is from WeatherUnderground. The current time is ${new Date()} and the pressure is ${currentWeatherData.baromin}`);
     res.status(200).send();
 });
 
@@ -24,5 +23,6 @@ app.get('/weatherstation/getcurrentweather', (req, res) => {
     res.status(200).send(latestWeather);
 });
 
-app.use(express.static('public'));
+app.use('/', express.static('public'));
+app.use('/scripts', express.static(__dirname + '/node_modules/'));
 app.listen(7025, () => console.log('The AccuriteAccess Weather Data Application has started'));
