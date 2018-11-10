@@ -3,6 +3,7 @@ var app = new Vue({
     data: {
       clock: '',
       weather: '',
+      weatherCompassDir: '',
       weatherMapUrl: '',
       isModalActive: false
     },
@@ -10,17 +11,28 @@ var app = new Vue({
         timer() {
             this.clock = moment().format('MMM Do YYYY, h:mm:ss a');
         },
+        determineWindDirection(compassDirection){
+            let self = this;
+            let compassArray = [[0,22,'N'],[23,67,'NE'],[68,112,'E'],[113,157,'SE'],
+                [158,202,'S'],[203,247,'SW'],[248,292,'W'],[293,337,'NW'],[338,360,'N']];
+            compassArray.forEach(element => {
+                if (element[0] <= compassDirection && compassDirection <= element[1]) {
+                    self.weatherCompassDir = element[2];
+                }
+            });
+        },
         getCurrentWeatherData() {
             var self = this;
             this.httpget = axios({
                 method:'get',
-                url:'http://192.168.0.159:7025/weatherstation/getcurrentweather/'
+                url:'/weatherstation/getcurrentweather/'
               }).then(function (response) {
-                  self.weather = response.data;
+                self.determineWindDirection(response.data.winddir);
+                self.weather = response.data;
             });
         },
         getCurrentWeatherMap() {
-            this.weatherMapUrl = `http://images.intellicast.com/WxImages/Radar/bwg.gif?` + Math.random().toString().slice(2);
+            this.weatherMapUrl = `http://radar.weather.gov/ridge/lite/N0R/OHX_loop.gif?${Math.random().toString().slice(2)}`;
         },
         toggleModal(){
             this.isModalActive = !this.isModalActive;
@@ -28,8 +40,8 @@ var app = new Vue({
     },
     mounted: function(){
         this.timerInterval = setInterval(this.timer, 1000);
-        this.getCurrentWeatherInterval = setInterval(this.getCurrentWeatherData, 30000);
-        this.getCurrentWeatherMapInterval = setInterval(this.getCurrentWeatherMap, 1800000);
+        this.getCurrentWeatherInterval = setInterval(this.getCurrentWeatherData, 20000);
+        this.getCurrentWeatherMapInterval = setInterval(this.getCurrentWeatherMap, 600600);
     },
     beforeDestroy() {
         clearInterval(this.timerInterval);

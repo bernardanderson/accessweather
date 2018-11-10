@@ -20,8 +20,8 @@
         <div v-if="isModalActive" class="modal is-active">
             <div class="modal-background"></div>
             <div v-on:click="toggleModal" class="modal-content">
-                <figure class="tile image is-4by3">
-                    <img src="http://images.intellicast.com/WxImages/Radar/bwg.gif">
+                <figure class="tile image is-1by1">
+                    <img v-bind:src="weatherMapUrl">
                 </figure>
             </div>
         </div>
@@ -47,10 +47,10 @@
                     <div class="tile is-parent">
                         <article class="tile is-child notification has-background-white">
                             <p class="has-text-centered has-text-weight-semibold less-bottom-margin small-font">WindSpeed & Direction</p>
-                            <p class="has-text-centered has-text-weight-semibold less-bottom-margin big-font">{{weather.windspeedmph}} <span class='small-font'>MPH</span></p>
-                            <p class="has-text-centered has-text-weight-semibold less-bottom-margin medium-font">{{weather.winddir}}</p>
+                            <p class="has-text-centered has-text-weight-semibold less-bottom-margin big-font">{{weather.windspeedmph}}<span class='small-font'>MPH  &nbsp;</span><span class='medium-font'>{{weatherCompassDir}}</span></p>
+                            <!-- <p class="has-text-centered has-text-weight-semibold less-bottom-margin medium-font">{{weather.winddir}}</p> -->
                             <hr class="hr-dark" />
-                            <figure class="tile image is-4by3">
+                            <figure class="tile image is-1by1">
                                 <img v-on:click="toggleModal" v-bind:src="weatherMapUrl">
                             </figure>
                         </article>  
@@ -61,9 +61,9 @@
                 <div class="tile">
                     <div class="tile is-parent">
                         <article class="tile is-child notification has-background-white">
-                            <p class="has-text-centered has-text-weight-semibold less-bottom-margin small-font">Rainfall</p>
-                            <p class="has-text-centered has-text-weight-semibold less-bottom-margin big-font">{{weather.rainin}} <span class='small-font'>in</span></p>
-                            <p class="has-text-centered has-text-weight-semibold less-bottom-margin is-size-4">Daily: {{weather.dailyrainin}} in</p>
+                            <p class="has-text-centered has-text-weight-semibold less-bottom-margin small-font">Today's Rainfall</p>
+                            <p class="has-text-centered has-text-weight-semibold less-bottom-margin big-font">{{weather.dailyrainin}} <span class='small-font'>in</span></p>
+                            <p class="has-text-centered has-text-weight-semibold less-bottom-margin is-size-4"> Rainfall: {{weather.rainin}} in</p>
                             <hr class="hr-dark" />
                             <p class="has-text-centered has-text-weight-semibold less-bottom-margin small-font">Pressure</p>
                             <p class="has-text-centered has-text-weight-semibold less-bottom-margin big-font">{{weather.baromin}} <span class='small-font'>in</span></p>
