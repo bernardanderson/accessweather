@@ -5,7 +5,18 @@ var app = new Vue({
       weather: '',
       weatherCompassDir: '',
       weatherMapUrl: '',
-      isModalActive: false
+      isModalActive: false,
+      chartData: {
+        columns: ['date', 'sales'],
+        rows: [
+          { 'date': '1/1', 'sales': 123 },
+          { 'date': '1/2', 'sales': 1223 },
+          { 'date': '1/3', 'sales': 2123 },
+          { 'date': '1/4', 'sales': 4123 },
+          { 'date': '1/5', 'sales': 3123 },
+          { 'date': '1/6', 'sales': 7123 }
+        ]
+      }
     },
     methods: {
         timer() {

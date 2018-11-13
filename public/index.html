@@ -6,6 +6,7 @@
     <title>AccuriteAccessWeatherMonitor</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="scripts/bulma/css/bulma.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="scripts/v-charts/lib/style.min.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
 </head>
 <body>
@@ -20,9 +21,10 @@
         <div v-if="isModalActive" class="modal is-active">
             <div class="modal-background"></div>
             <div v-on:click="toggleModal" class="modal-content">
-                <figure class="tile image is-1by1">
+                    <ve-pie :data="chartData" style="background-color: beige;"></ve-pie>
+                <!-- <figure class="tile image is-1by1">
                     <img v-bind:src="weatherMapUrl">
-                </figure>
+                </figure> -->
             </div>
         </div>
         <div class="tile is-ancestor">
@@ -76,5 +78,7 @@
 <script src="scripts/moment/min/moment.min.js"></script>
 <script src="scripts/axios/dist/axios.min.js"></script>
 <script src="scripts/vue/dist/vue.min.js"></script>
+<script src="scripts/echarts/dist/echarts.min.js"></script>
+<script src="scripts/v-charts/lib/index.min.js"></script>
 <script src="js/main.js"></script>
 </html>
