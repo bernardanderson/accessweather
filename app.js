@@ -1,6 +1,8 @@
 var express = require("express");
 var weatherData = require("./Models/WeatherData.js");
 var dbRepository = require("./DbRepo.js");
+
+const applicationPort = 8080;
 var app = express();
 
 // Initialize the Sqlite3 Database
@@ -18,6 +20,11 @@ app.get('/weatherstation/updateweatherstation.php', (req, res) => {
     res.status(200).send();
 });
 
+app.get('/weatherdata/temperatures/getmonthlyhighslows', (req, res) => {
+    let temperatureHighsAndLows = dbRepository.retrieveDailyTempHighAndLow();
+    res.status(200).send(temperatureHighsAndLows);
+});
+
 app.get('/weatherstation/getcurrentweather', (req, res) => {
     let latestWeather = new weatherData(dbRepository.retrieveLatestWeatherdata());
     res.status(200).send(latestWeather);
@@ -25,4 +32,4 @@ app.get('/weatherstation/getcurrentweather', (req, res) => {
 
 app.use('/', express.static('public'));
 app.use('/scripts', express.static(__dirname + '/node_modules/'));
-app.listen(7025, () => console.log('The AccuriteAccess Weather Data Application has started'));
+app.listen(applicationPort, () => console.log(`The AccuriteAccess Weather Data Application has started on port ${applicationPort}`));

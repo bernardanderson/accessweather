@@ -19,11 +19,16 @@ let insertWeatherdata = function(currentWeatherData) {
 }
 
 let retrieveLatestWeatherdata = function() {
-    return db.prepare(sqlCommands._retrieveLatestWeatherData).get();
+    return db.prepare(sqlCommands.retrieveLatestWeatherdata).get();
+}
+
+let retrieveDailyTempHighAndLow = function() {
+    return db.prepare(sqlCommands.retrieveDailyTempHighAndLow).all();
 }
 
 module.exports = {
     initDb: initDb,
     insertWeatherdata: insertWeatherdata,
-    retrieveLatestWeatherdata: retrieveLatestWeatherdata
+    retrieveLatestWeatherdata: retrieveLatestWeatherdata,
+    retrieveDailyTempHighAndLow: retrieveDailyTempHighAndLow
 }
