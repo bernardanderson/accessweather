@@ -2,7 +2,7 @@ var express = require("express");
 var weatherData = require("./Models/WeatherData.js");
 var dbRepository = require("./DbRepo.js");
 
-const applicationPort = 8080;
+const applicationPort = 7025;
 var app = express();
 
 // Initialize the Sqlite3 Database
@@ -22,7 +22,14 @@ app.get('/weatherstation/updateweatherstation.php', (req, res) => {
 
 app.get('/weatherdata/temperatures/getmonthlyhighslows', (req, res) => {
     let temperatureHighsAndLows = dbRepository.retrieveDailyTempHighAndLow();
-    res.status(200).send(temperatureHighsAndLows);
+    let chartData = {
+        columns: ['date', 'highTemp', 'lowTemp'],
+        rows: Object.values(temperatureHighsAndLows)
+    };
+    chartData.settings = {
+        yAxisName: ['Temperature F']
+    };
+    res.status(200).send(chartData);
 });
 
 app.get('/weatherstation/getcurrentweather', (req, res) => {

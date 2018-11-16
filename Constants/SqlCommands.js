@@ -9,7 +9,7 @@ class SqlCommands {
         
         this._retrieveLatestWeatherData = `SELECT * FROM AccuriteAccessData ORDER BY time DESC LIMIT 1;`;
 
-        this._retrieveDailyTempHighAndLow = `SELECT max(tempf), min(tempf), date(time) AS dt FROM AccuriteAccessData GROUP BY dt;`; 
+        this._retrieveDailyTempHighAndLow = `SELECT max(tempf) as highTemp, min(tempf) as lowTemp, date(time) AS date FROM AccuriteAccessData GROUP BY date;`; 
     }
 
     get intializeDataTable() {

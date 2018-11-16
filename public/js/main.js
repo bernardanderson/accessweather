@@ -5,18 +5,9 @@ var app = new Vue({
       weather: '',
       weatherCompassDir: '',
       weatherMapUrl: '',
-      isModalActive: false,
-      chartData: {
-        columns: ['date', 'sales'],
-        rows: [
-          { 'date': '1/1', 'sales': 123 },
-          { 'date': '1/2', 'sales': 1223 },
-          { 'date': '1/3', 'sales': 2123 },
-          { 'date': '1/4', 'sales': 4123 },
-          { 'date': '1/5', 'sales': 3123 },
-          { 'date': '1/6', 'sales': 7123 }
-        ]
-      }
+      isMapModalActive: false,
+      isTempModalActive: false,
+      highLowTempChart: []
     },
     methods: {
         timer() {
@@ -42,11 +33,17 @@ var app = new Vue({
                 self.weather = response.data;
             });
         },
+        getDailyHighLowTempData() {
+            var self = this;
+            this.httpget = axios({
+                method:'get',
+                url:'/weatherdata/temperatures/getmonthlyhighslows'
+              }).then(function (response) {
+                self.highLowTempChart = response.data;
+            });
+        },
         getCurrentWeatherMap() {
             this.weatherMapUrl = `http://radar.weather.gov/ridge/lite/N0R/OHX_loop.gif?${Math.random().toString().slice(2)}`;
-        },
-        toggleModal(){
-            this.isModalActive = !this.isModalActive;
         }
     },
     mounted: function(){
@@ -64,3 +61,4 @@ var app = new Vue({
 // Populates the weather data at the start
 app.getCurrentWeatherData();
 app.getCurrentWeatherMap();
+app.getDailyHighLowTempData();
