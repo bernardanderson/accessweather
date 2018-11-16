@@ -6,6 +6,7 @@
     <title>AccuriteAccessWeatherMonitor</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="scripts/bulma/css/bulma.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="scripts/v-charts/lib/style.min.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
 </head>
 <body>
@@ -17,9 +18,15 @@
                 <hr class="hr-special"/>
             </div>
         </div>
-        <div v-if="isModalActive" class="modal is-active">
+        <div v-if="isTempModalActive" class="modal is-active">
             <div class="modal-background"></div>
-            <div v-on:click="toggleModal" class="modal-content">
+            <div v-on:click="isTempModalActive = !isTempModalActive" class="modal-content">
+                <ve-line :data="highLowTempChart" :settings="highLowTempChart.settings" style="background-color: beige;"></ve-line>
+            </div>
+        </div>
+        <div v-if="isMapModalActive" class="modal is-active">
+            <div class="modal-background"></div>
+            <div v-on:click="isMapModalActive = !isMapModalActive" class="modal-content">
                 <figure class="tile image is-1by1">
                     <img v-bind:src="weatherMapUrl">
                 </figure>
@@ -30,8 +37,10 @@
                 <div class="tile">
                     <div class="tile is-parent">
                         <article class="tile is-child notification has-background-white">
-                            <p class="has-text-centered has-text-weight-semibold less-bottom-margin small-font">Temperature</p>
-                            <p class="has-text-centered has-text-weight-semibold less-bottom-margin big-font">{{weather.tempf}}<span class='small-font'>&deg;F</span></p>
+                            <div v-on:click="isTempModalActive = !isTempModalActive">
+                                <p class="has-text-centered has-text-weight-semibold less-bottom-margin small-font">Temperature</p>
+                                <p class="has-text-centered has-text-weight-semibold less-bottom-margin big-font">{{weather.tempf}}<span class='small-font'>&deg;F</span></p>
+                            </div>
                             <hr class="hr-special"/>
                             <p class="has-text-centered has-text-weight-semibold less-bottom-margin small-font">Humidity</p>
                             <p class="has-text-centered has-text-weight-semibold less-bottom-margin big-font">{{weather.humidity}}<span class='small-font'>%</span></p>
@@ -50,7 +59,7 @@
                             <p class="has-text-centered has-text-weight-semibold less-bottom-margin big-font">{{weather.windspeedmph}}<span class='small-font'>MPH  &nbsp;</span><span class='medium-font'>{{weatherCompassDir}}</span></p>
                             <hr class="hr-dark" />
                             <figure class="tile image is-1by1">
-                                <img v-on:click="toggleModal" v-bind:src="weatherMapUrl">
+                                <img v-on:click="isMapModalActive = !isMapModalActive" v-bind:src="weatherMapUrl">
                             </figure>
                         </article>  
                     </div>
@@ -76,5 +85,7 @@
 <script src="scripts/moment/min/moment.min.js"></script>
 <script src="scripts/axios/dist/axios.min.js"></script>
 <script src="scripts/vue/dist/vue.min.js"></script>
+<script src="scripts/echarts/dist/echarts.min.js"></script>
+<script src="scripts/v-charts/lib/index.min.js"></script>
 <script src="js/main.js"></script>
 </html>

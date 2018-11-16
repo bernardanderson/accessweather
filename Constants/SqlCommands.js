@@ -7,7 +7,9 @@ class SqlCommands {
 
         this._insertWeatherdata = `INSERT INTO AccuriteAccessData (baromin, humidity, tempf, windspeedmph, winddir, windgustmph, windgustdir, dewptf, dailyrainin, rainin, time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'));`;
         
-        this._retrieveLatestWeatherData = 'SELECT * FROM AccuriteAccessData ORDER BY time DESC LIMIT 1';
+        this._retrieveLatestWeatherData = `SELECT * FROM AccuriteAccessData ORDER BY time DESC LIMIT 1;`;
+
+        this._retrieveDailyTempHighAndLow = `SELECT max(tempf) as highTemp, min(tempf) as lowTemp, date(time) AS date FROM AccuriteAccessData GROUP BY date;`; 
     }
 
     get intializeDataTable() {
@@ -20,6 +22,10 @@ class SqlCommands {
 
     get retrieveLatestWeatherdata() {
         return this._retrieveLatestWeatherData;
+    }
+
+    get retrieveDailyTempHighAndLow() {
+        return this._retrieveDailyTempHighAndLow;
     }
 }
 

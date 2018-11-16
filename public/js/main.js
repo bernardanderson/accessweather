@@ -5,7 +5,9 @@ var app = new Vue({
       weather: '',
       weatherCompassDir: '',
       weatherMapUrl: '',
-      isModalActive: false
+      isMapModalActive: false,
+      isTempModalActive: false,
+      highLowTempChart: []
     },
     methods: {
         timer() {
@@ -31,11 +33,17 @@ var app = new Vue({
                 self.weather = response.data;
             });
         },
+        getDailyHighLowTempData() {
+            var self = this;
+            this.httpget = axios({
+                method:'get',
+                url:'/weatherdata/temperatures/getmonthlyhighslows'
+              }).then(function (response) {
+                self.highLowTempChart = response.data;
+            });
+        },
         getCurrentWeatherMap() {
             this.weatherMapUrl = `http://radar.weather.gov/ridge/lite/N0R/OHX_loop.gif?${Math.random().toString().slice(2)}`;
-        },
-        toggleModal(){
-            this.isModalActive = !this.isModalActive;
         }
     },
     mounted: function(){
@@ -53,3 +61,4 @@ var app = new Vue({
 // Populates the weather data at the start
 app.getCurrentWeatherData();
 app.getCurrentWeatherMap();
+app.getDailyHighLowTempData();
