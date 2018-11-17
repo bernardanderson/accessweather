@@ -37,7 +37,7 @@
                 <div class="tile">
                     <div class="tile is-parent">
                         <article class="tile is-child notification has-background-white">
-                            <div v-on:click="isTempModalActive = !isTempModalActive">
+                            <div v-on:click="getDailyHighLowTempData(); isTempModalActive = !isTempModalActive;">
                                 <p class="has-text-centered has-text-weight-semibold less-bottom-margin small-font">Temperature</p>
                                 <p class="has-text-centered has-text-weight-semibold less-bottom-margin big-font">{{weather.tempf}}<span class='small-font'>&deg;F</span></p>
                             </div>

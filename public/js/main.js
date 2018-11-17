@@ -61,4 +61,3 @@ var app = new Vue({
 // Populates the weather data at the start
 app.getCurrentWeatherData();
 app.getCurrentWeatherMap();
-app.getDailyHighLowTempData();

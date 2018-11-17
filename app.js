@@ -27,7 +27,8 @@ app.get('/weatherdata/temperatures/getmonthlyhighslows', (req, res) => {
         rows: Object.values(temperatureHighsAndLows)
     };
     chartData.settings = {
-        yAxisName: ['Temperature F']
+        area: true,
+        yAxisName: ['Temp F']
     };
     res.status(200).send(chartData);
 });
