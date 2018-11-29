@@ -5,7 +5,7 @@ class SqlCommands {
             windspeedmph NUMERIC NOT NULL, winddir NUMERIC NOT NULL, windgustmph NUMERIC NOT NULL, windgustdir NUMERIC NOT NULL, dewptf NUMERIC NOT NULL,
             dailyrainin NUMERIC NOT NULL, rainin NUMERIC NOT NULL, time DATETIME NOT NULL);`;
 
-        this._insertWeatherdata = `INSERT INTO AccuriteAccessData (baromin, humidity, tempf, windspeedmph, winddir, windgustmph, windgustdir, dewptf, dailyrainin, rainin, time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'));`;
+        this._insertWeatherdata = `INSERT INTO AccuriteAccessData (baromin, humidity, tempf, windspeedmph, winddir, windgustmph, windgustdir, dewptf, dailyrainin, rainin, time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime(?));`;
         
         this._retrieveLatestWeatherData = `SELECT * FROM AccuriteAccessData ORDER BY time DESC LIMIT 1;`;
 

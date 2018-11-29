@@ -1,40 +1,35 @@
 var express = require("express");
-var weatherData = require("./Models/WeatherData.js");
-var dbRepository = require("./DbRepo.js");
+var weatherDataService = require("./Services/WeatherDataService.js");
 
 const applicationPort = 7025;
 var app = express();
 
-// Initialize the Sqlite3 Database
-dbRepository.initDb();
+// Create a data access service with two properties, latestWeather and lastDbWrite.
+//  Move dbRepository logic into that. Check latestWeather.time against lastDbWrite to limit the reads/writes to the db
+//  Move time logic from sql to javascript and store the time in GMT.
+
+// Create v-echarts class and move that logic into there
 
 app.get('/weatherstation/updateweatherstation.php', (req, res) => {
-    let currentWeatherData = new weatherData(req.query);
-    
-    try {
-        dbRepository.insertWeatherdata(currentWeatherData);
-    } catch (exception){
-        console.log('The insert of weather data into the Database failed with an exception');
-        console.log(exception);
-    }
-    res.status(200).send();
+    let dbInsertResult = weatherDataService.insertWeatherDataIntoDb(req.query);
+    return (dbInsertResult) ? res.status(200).send() : res.status(400).send();
 });
 
-app.get('/weatherdata/temperatures/getmonthlyhighslows', (req, res) => {
-    let temperatureHighsAndLows = dbRepository.retrieveDailyTempHighAndLow();
-    let chartData = {
-        columns: ['date', 'highTemp', 'lowTemp'],
-        rows: Object.values(temperatureHighsAndLows)
-    };
-    chartData.settings = {
-        area: true,
-        yAxisName: ['Temp F']
-    };
-    res.status(200).send(chartData);
-});
+// app.get('/weatherdata/temperatures/getmonthlyhighslows', (req, res) => {
+//     let temperatureHighsAndLows = dbRepository.retrieveDailyTempHighAndLow();
+//     let chartData = {
+//         columns: ['date', 'highTemp', 'lowTemp'],
+//         rows: Object.values(temperatureHighsAndLows)
+//     };
+//     chartData.settings = {
+//         area: true,
+//         yAxisName: ['Temp F']
+//     };
+//     res.status(200).send(chartData);
+// });
 
 app.get('/weatherstation/getcurrentweather', (req, res) => {
-    let latestWeather = new weatherData(dbRepository.retrieveLatestWeatherdata());
+    let latestWeather = weatherDataService.getTheCurrentWeatherData();
     res.status(200).send(latestWeather);
 });
 

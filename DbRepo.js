@@ -15,7 +15,7 @@ let initDb = function() {
 
 let insertWeatherdata = function(currentWeatherData) {
     db.prepare(sqlCommands.insertWeatherdata).run(currentWeatherData.baromin, currentWeatherData.humidity, currentWeatherData.tempf, currentWeatherData.windspeedmph, currentWeatherData.winddir, 
-        currentWeatherData.windgustmph, currentWeatherData.windgustdir, currentWeatherData.dewptf, currentWeatherData.dailyrainin, currentWeatherData.rainin);
+        currentWeatherData.windgustmph, currentWeatherData.windgustdir, currentWeatherData.dewptf, currentWeatherData.dailyrainin, currentWeatherData.rainin, currentWeatherData.time.toISOString());
 }
 
 let retrieveLatestWeatherdata = function() {
@@ -25,6 +25,8 @@ let retrieveLatestWeatherdata = function() {
 let retrieveDailyTempHighAndLow = function() {
     return db.prepare(sqlCommands.retrieveDailyTempHighAndLow).all();
 }
+
+initDb();
 
 module.exports = {
     initDb: initDb,
