@@ -1,14 +1,12 @@
 var weatherData = require("../Models/WeatherData.js");
 var dbRepository = require("../DbRepo.js");
 
-let currentWeatherDataObject = null;
+let currentWeatherData, dbSaveThreshold = null;
 
 let insertWeatherDataIntoDb = function(weatherQuery) {
     try {
-        // If currentWeatherDataObject null, add to Db and populate currentWeatherDataObject
-        // Next query, do time check in here if within time populate currentWeatherDataObject but don't add to Db
-        let currentWeatherData = new weatherData(weatherQuery);
-        dbRepository.insertWeatherdata(currentWeatherData);
+        currentWeatherData = new weatherData(weatherQuery);
+        if (currentWeatherData.time >= dbSaveThreshold) updateDbAndSetSaveThreshold(currentWeatherData);
     } catch (exception){
         console.log('The insert of weather data into the Database failed with an exception');
         console.log(exception);
@@ -18,8 +16,15 @@ let insertWeatherDataIntoDb = function(weatherQuery) {
 }
 
 let getTheCurrentWeatherData = function() {
-    let latestWeather =  (currentWeatherDataObject === null) ? new weatherData(dbRepository.retrieveLatestWeatherdata()) : currentWeatherDataObject;
-    return latestWeather;
+    return currentWeatherData || new weatherData(dbRepository.retrieveLatestWeatherdata());
+}
+
+let updateDbAndSetSaveThreshold = function(incomingWeatherData){
+    dbRepository.insertWeatherdata(incomingWeatherData);
+
+    dbSaveThreshold = new Date();
+    dbSaveThreshold.setSeconds(dbSaveThreshold.getSeconds() + 10);
+    dbSaveThreshold.setHours(dbSaveThreshold.getHours() - (dbSaveThreshold.getTimezoneOffset() / 60))
 }
 
 module.exports = { 

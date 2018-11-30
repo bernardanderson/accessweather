@@ -4,10 +4,6 @@ var weatherDataService = require("./Services/WeatherDataService.js");
 const applicationPort = 7025;
 var app = express();
 
-// Create a data access service with two properties, latestWeather and lastDbWrite.
-//  Move dbRepository logic into that. Check latestWeather.time against lastDbWrite to limit the reads/writes to the db
-//  Move time logic from sql to javascript and store the time in GMT.
-
 // Create v-echarts class and move that logic into there
 
 app.get('/weatherstation/updateweatherstation.php', (req, res) => {
