@@ -1,7 +1,8 @@
 var express = require("express");
 var weatherDataService = require("./Services/WeatherDataService.js");
+const config = require('./config.js');
 
-const applicationPort = 7025;
+const applicationPort = config.app.port;
 var app = express();
 
 // Create v-echarts class and move that logic into there

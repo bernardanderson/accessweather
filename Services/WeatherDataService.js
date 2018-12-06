@@ -1,5 +1,6 @@
 var weatherData = require("../Models/WeatherData.js");
 var dbRepository = require("../DbRepo.js");
+const config = require('../config.js');
 
 let currentWeatherData, dbSaveThreshold = null;
 
@@ -23,7 +24,7 @@ let updateDbAndSetSaveThreshold = function(incomingWeatherData){
     dbRepository.insertWeatherdata(incomingWeatherData);
 
     dbSaveThreshold = new Date();
-    dbSaveThreshold.setSeconds(dbSaveThreshold.getSeconds() + 10);
+    dbSaveThreshold.setSeconds(dbSaveThreshold.getSeconds() + config.db.writeDelayInSeconds);
     dbSaveThreshold.setHours(dbSaveThreshold.getHours() - (dbSaveThreshold.getTimezoneOffset() / 60))
 }
 

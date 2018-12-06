@@ -1,7 +1,8 @@
 const Database = require('better-sqlite3');
-const SqlCommands= require('./Constants/SqlCommands.js');
+const SqlCommands = require('./Constants/SqlCommands');
+const config = require('./config.js');
 
-const db = new Database('./accessweather.db', {});
+const db = new Database(config.db.path, {});
 const sqlCommands = new SqlCommands();
 
 let initDb = function() {
