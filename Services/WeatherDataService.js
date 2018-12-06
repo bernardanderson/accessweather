@@ -16,6 +16,22 @@ let insertWeatherDataIntoDb = function(weatherQuery) {
     return true;
 }
 
+let getDailyTemperatureHighsAndLows = function() {
+    let temperatureHighsAndLows = dbRepository.retrieveDailyTempHighAndLow();
+
+    // Create v-echarts class and move that logic into there
+    let chartData = {
+        columns: ['date', 'highTemp', 'lowTemp'],
+        rows: Object.values(temperatureHighsAndLows)
+    };
+    chartData.settings = {
+        area: true,
+        yAxisName: ['Temp F']
+    };
+
+    return chartData;
+}
+
 let getTheCurrentWeatherData = function() {
     return currentWeatherData || new weatherData(dbRepository.retrieveLatestWeatherdata());
 }
@@ -30,5 +46,6 @@ let updateDbAndSetSaveThreshold = function(incomingWeatherData){
 
 module.exports = { 
     insertWeatherDataIntoDb : insertWeatherDataIntoDb,
-    getTheCurrentWeatherData: getTheCurrentWeatherData
+    getTheCurrentWeatherData: getTheCurrentWeatherData,
+    getDailyTemperatureHighsAndLows: getDailyTemperatureHighsAndLows
 }
