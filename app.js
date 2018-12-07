@@ -1,40 +1,22 @@
 var express = require("express");
-var weatherData = require("./Models/WeatherData.js");
-var dbRepository = require("./DbRepo.js");
-
-const applicationPort = 7025;
+var weatherDataService = require("./Services/WeatherDataService.js");
 var app = express();
+const config = require('./config.js');
 
-// Initialize the Sqlite3 Database
-dbRepository.initDb();
+const applicationPort = config.app.port;
 
 app.get('/weatherstation/updateweatherstation.php', (req, res) => {
-    let currentWeatherData = new weatherData(req.query);
-    
-    try {
-        dbRepository.insertWeatherdata(currentWeatherData);
-    } catch (exception){
-        console.log('The insert of weather data into the Database failed with an exception');
-        console.log(exception);
-    }
-    res.status(200).send();
+    let dbInsertResult = weatherDataService.insertWeatherDataIntoDb(req.query);
+    return (dbInsertResult) ? res.status(200).send() : res.status(400).send();
 });
 
 app.get('/weatherdata/temperatures/getmonthlyhighslows', (req, res) => {
-    let temperatureHighsAndLows = dbRepository.retrieveDailyTempHighAndLow();
-    let chartData = {
-        columns: ['date', 'highTemp', 'lowTemp'],
-        rows: Object.values(temperatureHighsAndLows)
-    };
-    chartData.settings = {
-        area: true,
-        yAxisName: ['Temp F']
-    };
-    res.status(200).send(chartData);
+    let tempChartData = weatherDataService.getDailyTemperatureHighsAndLows();
+    res.status(200).send(tempChartData);
 });
 
 app.get('/weatherstation/getcurrentweather', (req, res) => {
-    let latestWeather = new weatherData(dbRepository.retrieveLatestWeatherdata());
+    let latestWeather = weatherDataService.getTheCurrentWeatherData();
     res.status(200).send(latestWeather);
 });
 

@@ -1,7 +1,8 @@
 const Database = require('better-sqlite3');
-const SqlCommands= require('./Constants/SqlCommands.js');
+const SqlCommands = require('./Constants/SqlCommands');
+const config = require('./config.js');
 
-const db = new Database('./accessweather.db', {});
+const db = new Database(config.db.path, {});
 const sqlCommands = new SqlCommands();
 
 let initDb = function() {
@@ -14,17 +15,26 @@ let initDb = function() {
 }
 
 let insertWeatherdata = function(currentWeatherData) {
-    db.prepare(sqlCommands.insertWeatherdata).run(currentWeatherData.baromin, currentWeatherData.humidity, currentWeatherData.tempf, currentWeatherData.windspeedmph, currentWeatherData.winddir, 
-        currentWeatherData.windgustmph, currentWeatherData.windgustdir, currentWeatherData.dewptf, currentWeatherData.dailyrainin, currentWeatherData.rainin);
+
+    let sqliteUnderstandableTime = new Date(currentWeatherData.time).toISOString();
+
+    db.prepare(sqlCommands.insertWeatherdata).run(currentWeatherData.baromin, currentWeatherData.humidity, 
+        currentWeatherData.tempf, currentWeatherData.windspeedmph, currentWeatherData.winddir, 
+        currentWeatherData.windgustmph, currentWeatherData.windgustdir, currentWeatherData.dewptf, 
+        currentWeatherData.dailyrainin, currentWeatherData.rainin, sqliteUnderstandableTime);
 }
 
 let retrieveLatestWeatherdata = function() {
-    return db.prepare(sqlCommands.retrieveLatestWeatherdata).get();
+    let weatherData = db.prepare(sqlCommands.retrieveLatestWeatherdata).get();
+    weatherData.time = Date.parse(new Date(weatherData.time));
+    return weatherData; 
 }
 
 let retrieveDailyTempHighAndLow = function() {
     return db.prepare(sqlCommands.retrieveDailyTempHighAndLow).all();
 }
+
+initDb();
 
 module.exports = {
     initDb: initDb,

@@ -29,8 +29,8 @@ var app = new Vue({
                 method:'get',
                 url:'/weatherstation/getcurrentweather/'
               }).then(function (response) {
-                self.determineWindDirection(response.data.winddir);
                 self.weather = response.data;
+                self.determineWindDirection(response.data.winddir);
             });
         },
         getDailyHighLowTempData() {
