@@ -14,7 +14,7 @@
         <div class="container is-fluid ">
             <div class="notification has-background-white">
                 <p class="has-text-centered has-text-weight-semibold is-size-1">{{clock}}</p>
-                <p class="has-text-centered has-text-weight-semibold is-size-6">Last Updated: {{weather.time}} UTC</p>
+                <p class="has-text-centered has-text-weight-semibold is-size-6">Last Updated: {{new Date(weather.time).toString()}}</p>
                 <hr class="hr-special"/>
             </div>
         </div>

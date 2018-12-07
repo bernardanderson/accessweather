@@ -37,11 +37,8 @@ let getTheCurrentWeatherData = function() {
 }
 
 let updateDbAndSetSaveThreshold = function(incomingWeatherData){
+    dbSaveThreshold = incomingWeatherData.time + config.db.writeDelayInSeconds * 1000;
     dbRepository.insertWeatherdata(incomingWeatherData);
-
-    dbSaveThreshold = new Date();
-    dbSaveThreshold.setSeconds(dbSaveThreshold.getSeconds() + config.db.writeDelayInSeconds);
-    dbSaveThreshold.setHours(dbSaveThreshold.getHours() - (dbSaveThreshold.getTimezoneOffset() / 60))
 }
 
 module.exports = { 

@@ -10,7 +10,7 @@ class WeatherData {
         this.dewptf = Number(urlQueryObject.dewptf);
         this.dailyrainin = Number(urlQueryObject.dailyrainin);
         this.rainin = Number(urlQueryObject.rainin);
-        this.time = urlQueryObject.time || new Date().setHours(new Date().getHours() - (new Date().getTimezoneOffset() / 60));
+        this.time = urlQueryObject.time || Date.now() - (new Date().getTimezoneOffset() * 60 * 1000);
     }
 }
 

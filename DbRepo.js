@@ -15,14 +15,19 @@ let initDb = function() {
 }
 
 let insertWeatherdata = function(currentWeatherData) {
+
+    let sqliteUnderstandableTime = new Date(currentWeatherData.time).toISOString();
+
     db.prepare(sqlCommands.insertWeatherdata).run(currentWeatherData.baromin, currentWeatherData.humidity, 
         currentWeatherData.tempf, currentWeatherData.windspeedmph, currentWeatherData.winddir, 
         currentWeatherData.windgustmph, currentWeatherData.windgustdir, currentWeatherData.dewptf, 
-        currentWeatherData.dailyrainin, currentWeatherData.rainin, currentWeatherData.time.toISOString());
+        currentWeatherData.dailyrainin, currentWeatherData.rainin, sqliteUnderstandableTime);
 }
 
 let retrieveLatestWeatherdata = function() {
-    return db.prepare(sqlCommands.retrieveLatestWeatherdata).get();
+    let weatherData = db.prepare(sqlCommands.retrieveLatestWeatherdata).get();
+    weatherData.time = Date.parse(new Date(weatherData.time));
+    return weatherData; 
 }
 
 let retrieveDailyTempHighAndLow = function() {
