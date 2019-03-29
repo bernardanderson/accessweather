@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as simpleActions from './actions/simpleAction';
 import initialPropState, { initialPropType } from './initialState';
+import httpSvc from './services/HttpService';
 import PropTypes from 'prop-types';
 import './App.scss';
 
@@ -19,6 +20,10 @@ class App extends Component {
     // constructor(props, context) {
     //     super(props, context);
     // }
+
+    componentDidMount() {
+        httpSvc.get();
+    }
 
     simpleAction = () => {
         this.props.simpleAction();
