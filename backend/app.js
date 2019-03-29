@@ -1,9 +1,11 @@
 var express = require("express");
+var cors = require('cors');
 var weatherDataService = require("./Services/WeatherDataService.js");
-var app = express();
 const config = require('./config.js');
-
+var app = express();
 const applicationPort = config.app.port;
+
+app.use(cors());
 
 app.get('/weatherstation/updateweatherstation.php', (req, res) => {
     let dbInsertResult = weatherDataService.insertWeatherDataIntoDb(req.query);
