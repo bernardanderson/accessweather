@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as simpleActions from './actions/simpleAction';
+import * as weatherActions from './actions/weatherAction';
 import initialPropState, { initialPropType } from './initialState';
 import httpSvc from './services/HttpService';
 import PropTypes from 'prop-types';
-import './App.scss';
+import './css/App.scss';
 
 class App extends Component {
 
@@ -32,12 +32,9 @@ class App extends Component {
     render() {
         return (
         <div className = "App">
-            <header className = "App-header">
-                <p> Edit <code> src / App.js </code> and save to reload. </p>
-            </header>
             <button onClick={this.simpleAction}>Test redux action</button>
             <pre>
-                {`${this.props.crazyBool}`}
+                {`${this.props.currentWeatherData.baromin}`}
             </pre>
         </div>
         );
@@ -45,18 +42,18 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-    crazyBool: state.simpleReducer.crazyBool
+    currentWeatherData: state.weatherReducer.currentWeatherData
 })
 
 const mapDispatchToProps = (dispatch) => {
 
     const {
         simpleAction
-    } = simpleActions
+    } = weatherActions;
 
     return {
         simpleAction: () => dispatch(simpleAction())
-    }
-}
+    };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
