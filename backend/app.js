@@ -1,9 +1,10 @@
 var express = require("express");
 var cors = require('cors');
 var weatherDataService = require("./Services/WeatherDataService.js");
-var app = express();
-var io = require("socket.io")(http);
 const config = require('./config.js');
+var app = express();
+var http = require("http").Server(app);
+var io = require("socket.io")(http);
 const applicationPort = config.app.port;
 
 app.use(cors());
@@ -23,14 +24,23 @@ app.get('/weatherstation/getcurrentweather', (req, res) => {
     res.status(200).send(latestWeather);
 });
 
-app.use('/', express.static('public'));
-app.use('/scripts', express.static(__dirname + '/node_modules/'));
-app.listen(applicationPort, () => console.log(`The AccuriteAccess Weather Data Application has started on port ${applicationPort}`));
-
+io.origins(['http://192.168.0.159:3000']);
 io.on("connection", (socket) => {
+
     console.log("A user connected");
-    
+
+    socket.on('getWeather', () => {
+        console.log("Asking for weather");
+        socket.emit('receiveWeather', weatherDataService.getTheCurrentWeatherData());
+    })
+
     socket.on('disconnect', () => {
         console.log("A user connected");
       });
-})
+
+    socket.emit('welcome', "Welcome New Connector!");
+});
+
+app.use('/', express.static('public'));
+app.use('/scripts', express.static(__dirname + '/node_modules/'));
+http.listen(applicationPort, () => console.log(`The AccuriteAccess Weather Data Application has started on port ${applicationPort}`));

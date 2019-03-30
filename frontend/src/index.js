@@ -6,10 +6,6 @@ import './index.scss';
 import OverviewDisplay from './components/overviewDisplay/OverviewDisplay';
 import * as serviceWorker from './serviceWorker';
 
-
-
-
-
 render(
     <Provider store={configureStore()}>
         <OverviewDisplay />
