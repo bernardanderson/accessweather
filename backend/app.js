@@ -1,8 +1,9 @@
 var express = require("express");
 var cors = require('cors');
 var weatherDataService = require("./Services/WeatherDataService.js");
-const config = require('./config.js');
 var app = express();
+var io = require("socket.io")(http);
+const config = require('./config.js');
 const applicationPort = config.app.port;
 
 app.use(cors());
@@ -25,3 +26,11 @@ app.get('/weatherstation/getcurrentweather', (req, res) => {
 app.use('/', express.static('public'));
 app.use('/scripts', express.static(__dirname + '/node_modules/'));
 app.listen(applicationPort, () => console.log(`The AccuriteAccess Weather Data Application has started on port ${applicationPort}`));
+
+io.on("connection", (socket) => {
+    console.log("A user connected");
+    
+    socket.on('disconnect', () => {
+        console.log("A user connected");
+      });
+})
