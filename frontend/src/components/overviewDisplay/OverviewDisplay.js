@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as weatherActions from './actions/weatherAction';
-import initialPropState, { initialPropType } from './initialState';
-import httpSvc from './services/HttpService';
+import * as weatherActions from '../../actions/weatherAction';
+import initialPropState, { initialPropType } from '../../initialState';
+import httpSvc from '../../services/HttpService';
 import PropTypes from 'prop-types';
-import './css/App.scss';
+import './OverviewDisplay.scss';
 
-class App extends Component {
+class OverviewDisplay extends Component {
 
     static propTypes = {
         ...initialPropType,
@@ -17,9 +17,9 @@ class App extends Component {
         ...initialPropState
     };
 
-    // constructor(props, context) {
-    //     super(props, context);
-    // }
+    constructor(props, context) {
+        super(props, context);
+    }
 
     componentDidMount() {
         httpSvc.get();
@@ -56,4 +56,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(OverviewDisplay);

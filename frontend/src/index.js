@@ -1,14 +1,14 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux'
+import { render } from 'react-dom';
+import { Provider } from 'react-redux';
 import configureStore from './store';
-import './css/index.scss';
-import App from './App';
+import './index.scss';
+import OverviewDisplay from './components/overviewDisplay/OverviewDisplay';
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(
+render(
     <Provider store={configureStore()}>
-        <App />
+        <OverviewDisplay />
     </Provider>,
     document.getElementById('root'));
 serviceWorker.unregister();
