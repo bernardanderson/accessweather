@@ -1,15 +1,16 @@
 import initialState from "../initialState";
+import { SET_CURRENT_WEATHER_DATA } from "../actions/weatherAction";
 
-export default (state = {...initialState}, action) => {
+
+export default (state = initialState, action) => {
 
     switch (action.type) {
 
-        case 'SIMPLE_ACTION':
+        case SET_CURRENT_WEATHER_DATA:
             return {
                     ...state ,
                     currentWeatherData: {
-                        ...state.currentWeatherData,
-                        baromin: action.payload
+                        ...action.sentWeatherData,
                     }
             };
 

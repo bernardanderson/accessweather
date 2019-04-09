@@ -1,6 +1,5 @@
-const SIMPLE_ACTION = "SIMPLE_ACTION";
+export const SET_CURRENT_WEATHER_DATA = "SET_CURRENT_WEATHER_DATA";
 
-
-export const simpleAction = () => dispatch => {
-    dispatch({type: SIMPLE_ACTION, payload: 100});
-};
+export function setCurrentWeatherData(sentWeatherData) {
+    return({type: SET_CURRENT_WEATHER_DATA, sentWeatherData});
+}

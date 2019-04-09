@@ -32,7 +32,7 @@ let getDailyTemperatureHighsAndLows = function() {
     return chartData;
 }
 
-let getTheCurrentWeatherData = function() {
+const getTheCurrentWeatherData = function() {
     return currentWeatherData || new weatherData().returnWeatherData(dbRepository.retrieveLatestWeatherdata());
 }
 
