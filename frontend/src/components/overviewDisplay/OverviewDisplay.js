@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import './OverviewDisplay.scss';
 import io from 'socket.io-client';
 
-const socket = io('http://192.168.0.159:7025');
+const socket = io('http://192.168.0.159:7024');
 
 class OverviewDisplay extends Component {
 
