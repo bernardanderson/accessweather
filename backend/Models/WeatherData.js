@@ -1,16 +1,22 @@
+var moment = require("moment");
+
 class WeatherData {
-    constructor(urlQueryObject){
-        this.baromin = Number(urlQueryObject.baromin);
-        this.humidity = Number(urlQueryObject.humidity);
-        this.tempf = Number(urlQueryObject.tempf);
-        this.windspeedmph = Number(urlQueryObject.windspeedmph);
-        this.winddir = Number(urlQueryObject.winddir);
-        this.windgustmph = Number(urlQueryObject.windgustmph);
-        this.windgustdir = Number(urlQueryObject.windgustdir);
-        this.dewptf = Number(urlQueryObject.dewptf);
-        this.dailyrainin = Number(urlQueryObject.dailyrainin);
-        this.rainin = Number(urlQueryObject.rainin);
-        this.time = urlQueryObject.time || Date.now() - (new Date().getTimezoneOffset() * 60 * 1000);
+
+    returnWeatherData(urlQueryObject) { 
+        
+        return {
+            baromin: Number(urlQueryObject.baromin),
+            humidity: Number(urlQueryObject.humidity),
+            tempf: Number(urlQueryObject.tempf),
+            windspeedmph: Number(urlQueryObject.windspeedmph),
+            winddir: Number(urlQueryObject.winddir),
+            windgustmph: Number(urlQueryObject.windgustmph),
+            windgustdir: Number(urlQueryObject.windgustdir),
+            dewptf: Number(urlQueryObject.dewptf),
+            dailyrainin: Number(urlQueryObject.dailyrainin),
+            rainin: Number(urlQueryObject.rainin),
+            time: urlQueryObject.time || moment().utc()
+        }
     }
 }
 
