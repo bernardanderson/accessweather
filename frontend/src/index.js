@@ -4,10 +4,13 @@ import { Provider } from 'react-redux';
 import configureStore from './store';
 import './index.scss';
 import OverviewDisplay from './components/overviewDisplay/OverviewDisplay';
+import { socket } from './services/SocketIoService';
 import * as serviceWorker from './serviceWorker';
 
+export const store = configureStore();
+
 render(
-    <Provider store={configureStore()}>
+    <Provider store={store}>
         <OverviewDisplay />
     </Provider>,
     document.getElementById('root'));
