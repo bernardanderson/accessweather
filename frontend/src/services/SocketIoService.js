@@ -1,18 +1,30 @@
 import { store } from '../index';
 import { setCurrentWeatherData } from '../actions/weatherAction';
 import io from 'socket.io-client';
-export const socket = io('http://192.168.0.159:7024');
 
 class SocketIoService {
-
+    
+    socket = io('http://192.168.0.159:7024');
+    
     constructor() {
-        socket.on('currentWeatherData', (data) => {
+        this.socket.on('currentWeatherData', (data) => {
             store.dispatch(setCurrentWeatherData(data));
         });
+        
+        this.socket.emit('getCurrentWeatherData');
+        
+        if (!!SocketIoService.instance) {
+            return SocketIoService.instance;
+        }
 
-        socket.emit('getCurrentWeatherData');
+        return SocketIoService.instance;
     }
+    
 
+    emitDisconnect = () => {
+        console.log("It's here!");
+        this.socket.emit('happy');
+    }
 }
 
 const sioSvc = new SocketIoService(); 

@@ -4,6 +4,7 @@ import * as weatherActions from '../../actions/weatherAction';
 import initialPropState, { initialPropType } from '../../initialState';
 import PropTypes from 'prop-types';
 import './OverviewDisplay.scss';
+import sioSvc from '../../services/SocketIoService';
 
 class OverviewDisplay extends Component {
     
@@ -23,7 +24,7 @@ class OverviewDisplay extends Component {
     render() {
         return (
         <div className = "App">
-            {/* <button onClick={this.getWeather}>Test redux action</button> */}
+            <button onClick={() => sioSvc.emitDisconnect()}>Disconnect</button>
             <pre>
                 {`${this.props.currentWeatherData.baromin}`}
             </pre>

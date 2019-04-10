@@ -12,6 +12,10 @@ let startServer = function() {
             console.log("A Client is asking for most recent weather data")
             socket.emit('currentWeatherData', weatherDataService.getTheCurrentWeatherData());
         });
+
+        socket.on('happy', function() {
+            console.log("I'm happy");
+        });
     })
 
    io.listen(7024);
