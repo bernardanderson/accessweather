@@ -1,26 +1,19 @@
 const io = require('socket.io')();
 const weatherDataService = require('./WeatherDataService');
 
-let startServer = function() {
-
-    console.log("Socket.io server starting");
-
+function startServer() {
     io.on('connection', function(socket) {
-        console.log("A connection to a Client is established...");
-
+        console.log('A client has connected...');
+        
         socket.on('getCurrentWeatherData', function() {
-            console.log("A Client is asking for most recent weather data")
             socket.emit('currentWeatherData', weatherDataService.getTheCurrentWeatherData());
-        });
-
-        socket.on('happy', function() {
-            console.log("I'm happy");
-        });
+        })
     })
-
-   io.listen(7024);
+    
+    io.listen(7024);
+    console.log("The Socket.io server is starting");
 }
 
-module.exports = { 
-    startServer : startServer
-}
+startServer()
+
+module.exports.io = io;

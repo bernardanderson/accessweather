@@ -4,7 +4,7 @@ import * as weatherActions from '../../actions/weatherAction';
 import initialPropState, { initialPropType } from '../../initialState';
 import PropTypes from 'prop-types';
 import './OverviewDisplay.scss';
-import sioSvc from '../../services/SocketIoService';
+import ioSvc from '../../services/SocketIoService';
 
 class OverviewDisplay extends Component {
     
@@ -20,11 +20,10 @@ class OverviewDisplay extends Component {
     constructor(props, context) {
         super(props, context);
     }
-    
+
     render() {
         return (
         <div className = "App">
-            <button onClick={() => sioSvc.emitDisconnect()}>Disconnect</button>
             <pre>
                 {`${this.props.currentWeatherData.baromin}`}
             </pre>
@@ -37,15 +36,15 @@ const mapStateToProps = state => ({
     currentWeatherData: state.weatherReducer.currentWeatherData
 })
 
-const mapDispatchToProps = (dispatch) => {
+// const mapDispatchToProps = (dispatch) => {
 
-    // const {
-    //     setCurrentWeatherData
-    // } = weatherActions;
+//     const {
+//         setCurrentWeatherData
+//     } = weatherActions;
 
-    // return {
-    //     setCurrentWeatherData: (data) => dispatch(setCurrentWeatherData(data))
-    // };
-};
+//     return {
+//         setCurrentWeatherData: (data) => dispatch(setCurrentWeatherData(data))
+//     };
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OverviewDisplay);
+export default connect(mapStateToProps/*, mapDispatchToProps*/)(OverviewDisplay);

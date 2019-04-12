@@ -7,10 +7,10 @@ class SocketIoService {
     socket = io('http://192.168.0.159:7024');
     
     constructor() {
+
         this.socket.on('currentWeatherData', (data) => {
             store.dispatch(setCurrentWeatherData(data));
         });
-        
         this.socket.emit('getCurrentWeatherData');
         
         if (!!SocketIoService.instance) {
@@ -19,13 +19,7 @@ class SocketIoService {
 
         return SocketIoService.instance;
     }
-    
-
-    emitDisconnect = () => {
-        console.log("It's here!");
-        this.socket.emit('happy');
-    }
 }
 
-const sioSvc = new SocketIoService(); 
-export default sioSvc;
+const ioSvc = new SocketIoService(); 
+export default ioSvc;
