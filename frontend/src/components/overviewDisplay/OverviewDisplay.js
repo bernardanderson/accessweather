@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { initialPropState, initialPropType } from '../../initialState';
 import PropTypes from 'prop-types';
 import './OverviewDisplay.scss';
-import moment from 'moment'
-import ioSvc from '../../services/SocketIoService';
+import moment from 'moment';
+import '../../services/SocketIoService';
 
 class OverviewDisplay extends Component {
     
@@ -71,7 +71,7 @@ class OverviewDisplay extends Component {
                     <h1 className="ui small center aligned header">
                         {this.state.currentTime}
                         <div className="sub header sub-font-size">
-                        Last Updated:{this.props.currentWeatherData.time}
+                            Last Updated:{this.props.currentWeatherData.time}
                         </div>
                     </h1>
                 </div>
@@ -109,7 +109,7 @@ class OverviewDisplay extends Component {
                         <div className="ui section divider"/>
                     </div>
                     <div className="image-container">
-                        <img className="ui centered rounded image img-width" src={this.state.mapUrl} />
+                        <img className="ui centered rounded image img-width" alt="Weather map" src={this.state.mapUrl} />
                     </div>
                 </div>
                 <div className="column">
