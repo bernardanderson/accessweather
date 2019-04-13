@@ -1,6 +1,6 @@
 {
   "name": "accessweather",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "A small application for accepting WeatherUnderground data from an Accurite Access device, storing the data in a SQLite Db and retrieving/displaying that data",
   "main": "app.js",
   "scripts": {
@@ -11,8 +11,6 @@
   "dependencies": {
     "axios": "^0.18.0",
     "better-sqlite3": "^5.0.1",
-    "bulma": "^0.7.2",
-    "cors": "^2.8.5",
     "express": "^4.16.4",
     "moment": "^2.22.2",
     "socket.io": "^2.2.0"
