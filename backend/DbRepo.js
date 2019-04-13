@@ -26,7 +26,6 @@ let insertWeatherdata = function(currentWeatherData) {
 
 let retrieveLatestWeatherdata = function() {
     let weatherData = db.prepare(sqlCommands.retrieveLatestWeatherdata).get();
-    weatherData.time = Date.parse(new Date(weatherData.time));
     return weatherData; 
 }
 

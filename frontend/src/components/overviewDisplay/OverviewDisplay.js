@@ -44,6 +44,10 @@ class OverviewDisplay extends Component {
         });
     }
 
+    convertUTCToLocal = () => {
+        return moment.utc(this.props.currentWeatherData.time).local().format('MMMM Do YYYY, h:mm:ss a');
+    }
+
     getCurrentWeatherMap = () => {
         this.setState({
             ...this.state,
@@ -71,7 +75,7 @@ class OverviewDisplay extends Component {
                     <h1 className="ui small center aligned header">
                         {this.state.currentTime}
                         <div className="sub header sub-font-size">
-                            Last Updated:{this.props.currentWeatherData.time}
+                            Last Updated: {this.convertUTCToLocal()}
                         </div>
                     </h1>
                 </div>
