@@ -1,23 +1,14 @@
 var express = require("express");
+var socketIo  = require("./Services/SocketIoService.js");
 var weatherDataService = require("./Services/WeatherDataService.js");
-var app = express();
 const config = require('./config.js');
-
+var app = express();
 const applicationPort = config.app.port;
 
 app.get('/weatherstation/updateweatherstation.php', (req, res) => {
     let dbInsertResult = weatherDataService.insertWeatherDataIntoDb(req.query);
+    socketIo.io.sockets.emit('currentWeatherData', weatherDataService.getTheCurrentWeatherData());
     return (dbInsertResult) ? res.status(200).send() : res.status(400).send();
-});
-
-app.get('/weatherdata/temperatures/getmonthlyhighslows', (req, res) => {
-    let tempChartData = weatherDataService.getDailyTemperatureHighsAndLows();
-    res.status(200).send(tempChartData);
-});
-
-app.get('/weatherstation/getcurrentweather', (req, res) => {
-    let latestWeather = weatherDataService.getTheCurrentWeatherData();
-    res.status(200).send(latestWeather);
 });
 
 app.use('/', express.static('public'));

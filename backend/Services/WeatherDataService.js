@@ -6,7 +6,7 @@ let currentWeatherData, dbSaveThreshold = null;
 
 let insertWeatherDataIntoDb = function(weatherQuery) {
     try {
-        currentWeatherData = new weatherData(weatherQuery);
+        currentWeatherData = new weatherData().returnWeatherData(weatherQuery);
         if (currentWeatherData.time >= dbSaveThreshold) updateDbAndSetSaveThreshold(currentWeatherData);
     } catch (exception){
         console.log('The insert of weather data into the Database failed with an exception');
@@ -32,8 +32,8 @@ let getDailyTemperatureHighsAndLows = function() {
     return chartData;
 }
 
-let getTheCurrentWeatherData = function() {
-    return currentWeatherData || new weatherData(dbRepository.retrieveLatestWeatherdata());
+const getTheCurrentWeatherData = function() {
+    return currentWeatherData || new weatherData().returnWeatherData(dbRepository.retrieveLatestWeatherdata());
 }
 
 let updateDbAndSetSaveThreshold = function(incomingWeatherData){
