@@ -8,8 +8,9 @@ export const initialPropState = {
         humidity: 0,
         rainin: 0,
         tempf: 0,
-        time: 0,
+        time: '',
         winddir: 0,
+        windDirComp: '',
         windgustdir: 0,
         windgustmph: 0,
         windspeedmph: 0
@@ -17,7 +18,21 @@ export const initialPropState = {
 };
 
 export const initialPropType = {
-    currentWeatherData: PropTypes.objectOf(PropTypes.number)
+    currentWeatherData: 
+    PropTypes.shape({
+        baromin: PropTypes.number,
+        dailyrainin: PropTypes.number,
+        dewptf: PropTypes.number,
+        humidity: PropTypes.number,
+        rainin: PropTypes.number,
+        tempf: PropTypes.number,
+        time: PropTypes.string,
+        winddir: PropTypes.number,
+        windDirComp: PropTypes.string,
+        windgustdir: PropTypes.number,
+        windgustmph: PropTypes.number,
+        windspeedmph: PropTypes.number
+    })
 };
 
 export default initialPropState;
