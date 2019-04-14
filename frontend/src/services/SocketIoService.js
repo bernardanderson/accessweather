@@ -4,7 +4,7 @@ import io from 'socket.io-client';
 
 class SocketIoService {
     
-    socket = io('http://192.168.0.159:7024');
+    socket = io('http://192.168.0.156:7024');
     
     constructor() {
 
