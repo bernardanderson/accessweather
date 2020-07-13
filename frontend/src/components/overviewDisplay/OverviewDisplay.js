@@ -2,27 +2,23 @@ import React, {useState, useEffect} from 'react';
 import { useRecoilValue } from 'recoil';
 import { weatherStateMapped } from "../../selectors/weatherStateMapped";
 import moment from 'moment';
-// import '../../services/SocketIoService';
 import './OverviewDisplay.scss';
 
 const OverviewDisplay = () => {
     const getWeatherMapUrl = () => `http://radar.weather.gov/ridge/lite/N0R/HPX_loop.gif?${Math.random().toString().slice(2)}`;
+    const getCurrentTime = () => moment().format('MMMM Do YYYY, h:mm:ss a');
+    const convertUTCToLocal = () => moment.utc(currentWeatherState.time).local().format('MMMM Do YYYY, h:mm:ss a');
 
     const currentWeatherState = useRecoilValue(weatherStateMapped);
-    const [currentTime, setCurrentTime] = useState(moment().format('MMMM Do YYYY, h:mm:ss a'));
+    const [currentTime, setCurrentTime] = useState(getCurrentTime());
     const [mapUrl, setMapUrl] = useState(getWeatherMapUrl());
 
     const displayTime = () => {
-        setCurrentTime(moment().format('MMMM Do YYYY, h:mm:ss a'));
+        setCurrentTime(getCurrentTime());
     }
-
 
     const getCurrentWeatherMap = () => {
         setMapUrl(getWeatherMapUrl());
-    }
-
-    const convertUTCToLocal = () => {
-        return moment.utc(currentWeatherState.time).local().format('MMMM Do YYYY, h:mm:ss a');
     }
 
     useEffect(
@@ -35,22 +31,6 @@ const OverviewDisplay = () => {
                 clearInterval(getCurrentWeatherMapInterval);
             }
         },[]);
-    
-    // this.state = {
-    //     currentTime: moment().format('MMMM Do YYYY, h:mm:ss a'),
-    //     mapUrl: `http://radar.weather.gov/ridge/lite/N0R/OHX_loop.gif?${Math.random().toString().slice(2)}`
-    // };
-
-
-    // componentDidMount() {
-    //     this.timerInterval = setInterval(this.displayTime, 1000);
-    //     this.getCurrentWeatherMapInterval = setInterval(this.getCurrentWeatherMap, 600000);
-    // }
-
-    // componentWillUnmount() {
-    //     clearInterval(this.timerInterval);
-    //     clearInterval(this.getCurrentWeatherMapInterval);
-    // }
 
     const tempHumidityDewpoint = {
         Temperature: <div>{currentWeatherState.tempf}<span className="smaller-font">°F</span><div className="ui section divider"/></div>,
