@@ -1,81 +1,77 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { initialPropState, initialPropType } from '../../initialState';
-import PropTypes from 'prop-types';
-import './OverviewDisplay.scss';
+import React, {useState, useEffect} from 'react';
+import { useRecoilState } from 'recoil';
+import { weatherState } from "../../atoms/weatherState";
 import moment from 'moment';
 import '../../services/SocketIoService';
+import './OverviewDisplay.scss';
 
-class OverviewDisplay extends Component {
+const OverviewDisplay = () => {
+    const getWeatherMapUrl = () => `http://radar.weather.gov/ridge/lite/N0R/HPX_loop.gif?${Math.random().toString().slice(2)}`;
+
+    const [currentWeatherState, setCurrentWeatherState] = useRecoilState(weatherState);
+    const [currentTime, setCurrentTime] = useState(moment().format('MMMM Do YYYY, h:mm:ss a'));
+    const [mapUrl, setMapUrl] = useState(getWeatherMapUrl());
+
+    const displayTime = () => {
+        setCurrentTime(moment().format('MMMM Do YYYY, h:mm:ss a'));
+    }
+
+
+    const getCurrentWeatherMap = () => {
+        setMapUrl(getWeatherMapUrl());
+    }
+
+    const convertUTCToLocal = () => {
+        return moment.utc(currentWeatherState.time).local().format('MMMM Do YYYY, h:mm:ss a');
+    }
+
+    useEffect(
+        ()=> {
+            const timerInterval = setInterval(displayTime, 1000);
+            const getCurrentWeatherMapInterval = setInterval(getCurrentWeatherMap, 600000);
+            
+            return function cleanup() {
+                clearInterval(timerInterval);
+                clearInterval(getCurrentWeatherMapInterval);
+            }
+        },[]);
     
-    static propTypes = {
-        ...initialPropType,
-        setCurrentWeatherData: PropTypes.func
+    // this.state = {
+    //     currentTime: moment().format('MMMM Do YYYY, h:mm:ss a'),
+    //     mapUrl: `http://radar.weather.gov/ridge/lite/N0R/OHX_loop.gif?${Math.random().toString().slice(2)}`
+    // };
+
+
+    // componentDidMount() {
+    //     this.timerInterval = setInterval(this.displayTime, 1000);
+    //     this.getCurrentWeatherMapInterval = setInterval(this.getCurrentWeatherMap, 600000);
+    // }
+
+    // componentWillUnmount() {
+    //     clearInterval(this.timerInterval);
+    //     clearInterval(this.getCurrentWeatherMapInterval);
+    // }
+
+    const tempHumidityDewpoint = {
+        Temperature: <div>{currentWeatherState.tempf}<span className="smaller-font">°F</span><div className="ui section divider"/></div>,
+        Humidity: <div>{currentWeatherState.humidity}<span className="smaller-font">%</span><div className="ui section divider"/></div>,
+        Dewpoint: <div>{currentWeatherState.dewptf}<span className="smaller-font">°F</span></div>
     };
-    
-    static defaultProps = {
-        ...initialPropState
 
+    const dailyTotalRainPressure = {
+        "Today's Rainfall": <div>{currentWeatherState.dailyrainin}<span className="smaller-font">{"  in".replace(/ /g, "\u00a0")}</span><div className="ui section divider"/></div>,
+        "Total Rainfall": <div>{currentWeatherState.rainin}<span className="smaller-font">{"  in".replace(/ /g, "\u00a0")}</span><div className="ui section divider"/></div>,
+        "Pressure": <div>{currentWeatherState.baromin}<span className="smaller-font">{"  in".replace(/ /g, "\u00a0")}</span></div>,
     };
 
-    constructor(props){
-        super(props);
-    
-        this.state = {
-            currentTime: moment().format('MMMM Do YYYY, h:mm:ss a'),
-            mapUrl: `http://radar.weather.gov/ridge/lite/N0R/OHX_loop.gif?${Math.random().toString().slice(2)}`
-        };
-    }
-
-    componentDidMount() {
-        this.timerInterval = setInterval(this.displayTime, 1000);
-        this.getCurrentWeatherMapInterval = setInterval(this.getCurrentWeatherMap, 600000);
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.timerInterval);
-        clearInterval(this.getCurrentWeatherMapInterval);
-    }
-
-    displayTime = () => {
-        this.setState({
-            ...this.state,
-            currentTime: moment().format('MMMM Do YYYY, h:mm:ss a')
-        });
-    }
-
-    convertUTCToLocal = () => {
-        return moment.utc(this.props.currentWeatherData.time).local().format('MMMM Do YYYY, h:mm:ss a');
-    }
-
-    getCurrentWeatherMap = () => {
-        this.setState({
-            ...this.state,
-            mapUrl: `http://radar.weather.gov/ridge/lite/N0R/OHX_loop.gif?${Math.random().toString().slice(2)}`
-        });
-    }
-
-    render() {
-        const tempHumidityDewpoint = {
-            Temperature: <div>{this.props.currentWeatherData.tempf}<span className="smaller-font">°F</span><div className="ui section divider"/></div>,
-            Humidity: <div>{this.props.currentWeatherData.humidity}<span className="smaller-font">%</span><div className="ui section divider"/></div>,
-            Dewpoint: <div>{this.props.currentWeatherData.dewptf}<span className="smaller-font">°F</span></div>
-        };
-
-        const dailyTotalRainPressure = {
-            "Today's Rainfall": <div>{this.props.currentWeatherData.dailyrainin}<span className="smaller-font">{"  in".replace(/ /g, "\u00a0")}</span><div className="ui section divider"/></div>,
-            "Total Rainfall": <div>{this.props.currentWeatherData.rainin}<span className="smaller-font">{"  in".replace(/ /g, "\u00a0")}</span><div className="ui section divider"/></div>,
-            "Pressure": <div>{this.props.currentWeatherData.baromin}<span className="smaller-font">{"  in".replace(/ /g, "\u00a0")}</span></div>,
-        };
-
-        return (
+    return (
         <div className = "App overview-display">
             <div className="twelve wide column time-top-margin">
                 <div className="larger-font">
                     <h1 className="ui small center aligned header">
-                        {this.state.currentTime}
+                        {currentTime}
                         <div className="sub header sub-font-size">
-                            Last Updated: {this.convertUTCToLocal()}
+                            Last Updated: {convertUTCToLocal()}
                         </div>
                     </h1>
                 </div>
@@ -105,15 +101,15 @@ class OverviewDisplay extends Component {
                         </h1>
                         <div className="larger-font">
                             <div className="ui huge center aligned header">
-                                {this.props.currentWeatherData.windspeedmph}
+                                {currentWeatherState.windspeedmph}
                                 <span className="smaller-font">{"MPH  ".replace(/ /g, "\u00a0")}</span>
-                                <span className="medium-font">{this.props.currentWeatherData.windDirComp}</span>
+                                <span className="medium-font">{currentWeatherState.windDirComp}</span>
                             </div>
                         </div>
                         <div className="ui section divider"/>
                     </div>
                     <div className="image-container">
-                        <img className="ui centered rounded image img-width" alt="Weather map" src={this.state.mapUrl} />
+                        <img className="ui centered rounded image img-width" alt="Weather map" src={mapUrl} />
                     </div>
                 </div>
                 <div className="column">
@@ -134,23 +130,7 @@ class OverviewDisplay extends Component {
                 </div>
             </div>
         </div>
-        );
-    }
+    );
 }
 
-const mapStateToProps = state => ({
-    currentWeatherData: state.weatherReducer.currentWeatherData
-});
-
-// const mapDispatchToProps = (dispatch) => {
-
-//     const {
-//         setCurrentWeatherData
-//     } = weatherActions;
-
-//     return {
-//         setCurrentWeatherData: (data) => dispatch(setCurrentWeatherData(data))
-//     };
-// };
-
-export default connect(mapStateToProps/*, mapDispatchToProps*/)(OverviewDisplay);
+export default OverviewDisplay;
