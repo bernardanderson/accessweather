@@ -1,17 +1,15 @@
 import React from 'react';
-import { render } from 'react-dom';
-import { Provider } from 'react-redux';
-import configureStore from './store';
-import 'semantic-ui/dist/semantic.css';
+import ReactDOM from 'react-dom';
+import 'fomantic-ui/dist/semantic.css';
 import './index.scss';
-import OverviewDisplay from './components/overviewDisplay/OverviewDisplay';
-import * as serviceWorker from './serviceWorker';
+import App from './App';
+import { RecoilRoot } from 'recoil';
 
-export const store = configureStore();
-
-render(
-    <Provider store={store}>
-        <OverviewDisplay />
-    </Provider>,
-    document.getElementById('root'));
-serviceWorker.unregister();
+ReactDOM.render(
+    <React.StrictMode>
+        <RecoilRoot>
+            <App />
+        </RecoilRoot>
+    </React.StrictMode>,
+  document.getElementById('root')
+);
