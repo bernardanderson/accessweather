@@ -1,14 +1,14 @@
 import React, {useState, useEffect} from 'react';
-import { useRecoilState } from 'recoil';
-import { weatherState } from "../../atoms/weatherState";
+import { useRecoilValue } from 'recoil';
+import { weatherStateMapped } from "../../selectors/weatherStateMapped";
 import moment from 'moment';
-import '../../services/SocketIoService';
+// import '../../services/SocketIoService';
 import './OverviewDisplay.scss';
 
 const OverviewDisplay = () => {
     const getWeatherMapUrl = () => `http://radar.weather.gov/ridge/lite/N0R/HPX_loop.gif?${Math.random().toString().slice(2)}`;
 
-    const [currentWeatherState, setCurrentWeatherState] = useRecoilState(weatherState);
+    const currentWeatherState = useRecoilValue(weatherStateMapped);
     const [currentTime, setCurrentTime] = useState(moment().format('MMMM Do YYYY, h:mm:ss a'));
     const [mapUrl, setMapUrl] = useState(getWeatherMapUrl());
 
