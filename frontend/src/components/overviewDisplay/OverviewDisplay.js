@@ -26,7 +26,7 @@ const OverviewDisplay = () => {
             const timerInterval = setInterval(displayTime, 1000);
             const getCurrentWeatherMapInterval = setInterval(getCurrentWeatherMap, 600000);
             
-            return function cleanup() {
+            return () => {
                 clearInterval(timerInterval);
                 clearInterval(getCurrentWeatherMapInterval);
             }
@@ -39,8 +39,8 @@ const OverviewDisplay = () => {
     };
 
     const dailyTotalRainPressure = {
-        "Today's Rainfall": <div>{currentWeatherState.dailyrainin}<span className="smaller-font">{"  in".replace(/ /g, "\u00a0")}</span><div className="ui section divider"/></div>,
-        "Total Rainfall": <div>{currentWeatherState.rainin}<span className="smaller-font">{"  in".replace(/ /g, "\u00a0")}</span><div className="ui section divider"/></div>,
+        "Today's Total Rainfall": <div>{currentWeatherState.dailyrainin}<span className="smaller-font">{"  in".replace(/ /g, "\u00a0")}</span><div className="ui section divider"/></div>,
+        "Sustained Rainfall": <div>{currentWeatherState.rainin}<span className="smaller-font">{"  in".replace(/ /g, "\u00a0")}</span><div className="ui section divider"/></div>,
         "Pressure": <div>{currentWeatherState.baromin}<span className="smaller-font">{"  in".replace(/ /g, "\u00a0")}</span></div>,
     };
 
