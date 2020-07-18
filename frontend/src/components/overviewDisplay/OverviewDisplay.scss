@@ -1,11 +1,72 @@
-.overview-display {
+.access-weather--overview-display {
 
-    .ui.header {
-        line-height: 1.1em;
+    hr {
+        display: block;
+        height: 1px;
+        border: 0;
+        border-top: 1px solid #ccc;
+        margin: 1em 0;
+        padding: 0;
+        width: 100%;
     }
 
-    .time-top-margin {
+    .current-time--header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         margin-top: 20px;
+        line-height: 0.9em;
+        font-size: 34pt;
+        font-weight: 600;
+
+        .current-time--last-updated {
+            font-size: 22px;
+            font-style: italic;
+        }
+    }
+
+    .main-data--panel {
+        display: flex;
+        flex-direction: row;
+
+        .panel-heading {
+            font-size: 35px;
+            font-weight: 600;
+            margin-top: 15px;
+        }
+
+        .full-width {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 250px;
+            
+            .sub-item {
+                font-weight: 600;
+                font-size: 90px;
+                padding-top: 50px;
+                margin-bottom: 50px;
+                line-height: 2rem;
+            }
+        }
+
+        .edge-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+
+    .windspeed-radar--display {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex: 1;
+
+        .img-width {
+            width: 500px;
+        }
     }
 
     .larger-font {
@@ -18,18 +79,5 @@
 
     .smaller-font {
         font-size: 34pt;
-    }
-
-    .sub-font-size {
-        font-size: 1.5rem!important;
-    }
-
-    .no-margin-padding {
-        margin: 0!important;
-        padding: 0!important;
-    }
-
-    .img-width {
-        width: 500px;
     }
 }

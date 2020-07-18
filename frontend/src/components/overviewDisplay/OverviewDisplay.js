@@ -32,82 +32,67 @@ const OverviewDisplay = () => {
             }
         },[]);
 
+    const generateEdgeColumn = (columnItems) => {
+        
+        let indexOfLastItem = Object.keys(columnItems).length-1;
+        
+        return <div className="edge-column">
+            { 
+                Object.keys(columnItems).map((key, index) => 
+                    <div className="full-width" key={key}>
+                            <div className="panel-heading">
+                                {key}
+                            </div>
+                            {columnItems[key]}
+                        {index === indexOfLastItem ? '' : <hr /> }
+                    </div>
+                )
+            }
+        </div>;
+    }
+
     const tempHumidityDewpoint = {
-        Temperature: <div>{currentWeatherState.tempf}<span className="smaller-font">°F</span><div className="ui section divider"/></div>,
-        Humidity: <div>{currentWeatherState.humidity}<span className="smaller-font">%</span><div className="ui section divider"/></div>,
-        Dewpoint: <div>{currentWeatherState.dewptf}<span className="smaller-font">°F</span></div>
+        Temperature: <div className="sub-item">{currentWeatherState.tempf}<span className="smaller-font">°F</span></div>,
+        Humidity: <div className="sub-item">{currentWeatherState.humidity}<span className="smaller-font">%</span></div>,
+        Dewpoint: <div className="sub-item">{currentWeatherState.dewptf}<span className="smaller-font">°F</span></div>
     };
 
     const dailyTotalRainPressure = {
-        "Today's Total Rainfall": <div>{currentWeatherState.dailyrainin}<span className="smaller-font">{"  in".replace(/ /g, "\u00a0")}</span><div className="ui section divider"/></div>,
-        "Sustained Rainfall": <div>{currentWeatherState.rainin}<span className="smaller-font">{"  in".replace(/ /g, "\u00a0")}</span><div className="ui section divider"/></div>,
-        "Pressure": <div>{currentWeatherState.baromin}<span className="smaller-font">{"  in".replace(/ /g, "\u00a0")}</span></div>,
+        "Today's Total Rainfall": <div className="sub-item">{currentWeatherState.dailyrainin}<span className="smaller-font">{" in".replace(/ /g, "\u00a0")}</span></div>,
+        "Sustained Rainfall": <div className="sub-item">{currentWeatherState.rainin}<span className="smaller-font">{" in".replace(/ /g, "\u00a0")}</span></div>,
+        "Pressure": <div className="sub-item">{currentWeatherState.baromin}<span className="smaller-font">{" in".replace(/ /g, "\u00a0")}</span></div>,
     };
 
     return (
-        <div className = "App overview-display">
-            <div className="twelve wide column time-top-margin">
-                <div className="larger-font">
-                    <h1 className="ui small center aligned header">
-                        {currentTime}
-                        <div className="sub header sub-font-size">
-                            Last Updated: {convertUTCToLocal()}
-                        </div>
-                    </h1>
-                </div>
+        <div className="access-weather--overview-display">
+            <div className="current-time--header">
+                    {currentTime}
+                    <div className="current-time--last-updated">
+                        Last Updated: {convertUTCToLocal()}
+                    </div>
             </div>
-            <div className="ui section divider"/>
-            <div className="ui equal width grid">
-                <div className="column">
-                    { 
-                        Object.keys(tempHumidityDewpoint).map(key => 
-                            <div key={key}>
-                                    <h1 className="ui center aligned header">
-                                        {key}
-                                    </h1>
-                                <div className="larger-font">
-                                    <div className="ui huge center aligned header">
-                                        {tempHumidityDewpoint[key]}
-                                    </div>
-                                </div>
-                            </div>
-                        )
-                    }
-                </div>
-                <div className="six wide column">
+            <hr />
+            <div className="main-data--panel">
+                {generateEdgeColumn(tempHumidityDewpoint)}
+                <div className="windspeed-radar--display">
                     <div>
-                        <h1 className="ui center aligned header">
+                        <div className="panel-heading">
                             Windspeed & Direction
-                        </h1>
-                        <div className="larger-font">
-                            <div className="ui huge center aligned header">
+                        </div>
+                        <div className="full-width">
+                            <div className="sub-item">
                                 {currentWeatherState.windspeedmph}
                                 <span className="smaller-font">{"MPH  ".replace(/ /g, "\u00a0")}</span>
                                 <span className="medium-font">{currentWeatherState.windDirComp}</span>
                             </div>
                         </div>
-                        <div className="ui section divider"/>
+                        <hr />
                     </div>
                     <div className="image-container">
-                        <img className="ui centered rounded image img-width" alt="Weather map" src={mapUrl} />
+                        <img className="img-width" alt="Weather map" src={mapUrl} />
                     </div>
                 </div>
-                <div className="column">
-                    { 
-                        Object.keys(dailyTotalRainPressure).map(key => 
-                            <div key={key}>
-                                    <h1 className="ui center aligned header">
-                                        {key}
-                                    </h1>
-                                <div className="larger-font">
-                                    <div className="ui huge center aligned header">
-                                        {dailyTotalRainPressure[key]}
-                                    </div>
-                                </div>
-                            </div>
-                        )
-                    }
-                </div>
+                {generateEdgeColumn(dailyTotalRainPressure)}
             </div>
         </div>
     );
