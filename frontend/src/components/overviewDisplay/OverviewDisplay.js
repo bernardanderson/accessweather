@@ -5,7 +5,7 @@ import moment from 'moment';
 import './OverviewDisplay.scss';
 
 const OverviewDisplay = () => {
-    const getWeatherMapUrl = () => `http://radar.weather.gov/ridge/lite/N0R/HPX_loop.gif?${Math.random().toString().slice(2)}`;
+    const getWeatherMapUrl = () => `http://radar.weather.gov/ridge/lite/N0R/OHX_loop.gif?${Math.random().toString().slice(2)}`;
     const getCurrentTime = () => moment().format('MMMM Do YYYY, h:mm:ss a');
     const convertUTCToLocal = () => moment.utc(currentWeatherState.time).local().format('MMMM Do YYYY, h:mm:ss a');
 
