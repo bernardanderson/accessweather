@@ -1,34 +1,27 @@
 import React, {useState, useEffect} from 'react';
 import { useRecoilValue } from 'recoil';
+import MapDisplay from '../mapDisplay/MapDisplay';
 import { weatherStateMapped } from "../../selectors/weatherStateMapped";
 import moment from 'moment';
 import './OverviewDisplay.scss';
 
 const OverviewDisplay = () => {
-    const getWeatherMapUrl = () => `http://radar.weather.gov/ridge/lite/N0R/OHX_loop.gif?${Math.random().toString().slice(2)}`;
+    const currentWeatherState = useRecoilValue(weatherStateMapped);
     const getCurrentTime = () => moment().format('MMMM Do YYYY, h:mm:ss a');
     const convertUTCToLocal = () => moment.utc(currentWeatherState.time).local().format('MMMM Do YYYY, h:mm:ss a');
 
-    const currentWeatherState = useRecoilValue(weatherStateMapped);
     const [currentTime, setCurrentTime] = useState(getCurrentTime());
-    const [mapUrl, setMapUrl] = useState(getWeatherMapUrl());
 
     const displayTime = () => {
         setCurrentTime(getCurrentTime());
     }
 
-    const getCurrentWeatherMap = () => {
-        setMapUrl(getWeatherMapUrl());
-    }
-
     useEffect(
         ()=> {
             const timerInterval = setInterval(displayTime, 1000);
-            const getCurrentWeatherMapInterval = setInterval(getCurrentWeatherMap, 600000);
             
             return () => {
                 clearInterval(timerInterval);
-                clearInterval(getCurrentWeatherMapInterval);
             }
         },[]);
 
@@ -88,9 +81,7 @@ const OverviewDisplay = () => {
                         </div>
                         <hr />
                     </div>
-                    <div className="image-container">
-                        <img className="img-width" alt="Weather map" src={mapUrl} />
-                    </div>
+                    <MapDisplay />
                 </div>
                 {generateEdgeColumn(dailyTotalRainPressure)}
             </div>
