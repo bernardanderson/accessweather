@@ -9,7 +9,9 @@ export const weatherStateMapped = selector({
 
         return {
           ...currentWeatherState,
-          windDirComp: mapper.windDirectionValueToDirection(currentWeatherState.winddir)
+          windDirComp: mapper.windDirectionValueToDirection(currentWeatherState.winddir),
+          dailyrainin: currentWeatherState.dailyrainin.toFixed(2),
+          rainin: currentWeatherState.rainin.toFixed(2)
         }
     }
 });
