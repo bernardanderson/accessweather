@@ -2,39 +2,42 @@ import React, {useState, useEffect} from 'react';
 import MapSelector from './MapSelector';
 import './MapDisplay.scss';
 
+const randomizerValue = () => Math.random().toString().slice(2);
+
 const MapDisplay = () => {
     const [mapRadar, setMapRadar] = useState('OHX');
-    const getWeatherMapUrl = (radarValue) => `http://radar.weather.gov/ridge/lite/N0R/${radarValue}_loop.gif?${Math.random().toString().slice(2)}`;
-    const [mapUrl, setMapUrl] = useState(getWeatherMapUrl(mapRadar));
+    const [urlRandomizer, setUrlRandomizer] = useState(randomizerValue);
     const [showMap, setShowMap] = useState(true);
-
-    const updateWeatherMapImage = (mapRadar) => {
-        setMapUrl(getWeatherMapUrl(mapRadar));
-    }
 
     const handleDropdownChange = (radarValue) => {
         setMapRadar(radarValue.target.value);
-        updateWeatherMapImage(radarValue.target.value);
         setShowMap(true);
+    }
+
+    const updateUrlRandomizer = () => {
+        setUrlRandomizer(randomizerValue());
     }
 
     useEffect(
         ()=> {
-            const getCurrentWeatherMapInterval = setInterval(updateWeatherMapImage, 600000);
+            const getCurrentWeatherMapInterval = setInterval(updateUrlRandomizer, 600000);
+
             return () => {
                 clearInterval(getCurrentWeatherMapInterval);
             }
         },[]);
 
     return (
-        <>
-            <div className="image-container">
-                { showMap ? 
-                    <img className="img-width" alt="Weather map" src={mapUrl} onClick={() => setShowMap(false)}/> :
-                    <MapSelector currentRadarValue={mapRadar} handleDropdownChange={handleDropdownChange}/>
-                }
-            </div>
-        </>
+        <div className="image-container">
+            { showMap ? 
+                <img className="img-width" 
+                        alt="Weather Map" 
+                        src={`http://radar.weather.gov/ridge/lite/N0R/${mapRadar}_loop.gif?${urlRandomizer}`} 
+                        onClick={() => setShowMap(false)}
+                /> :
+                <MapSelector currentRadarValue={mapRadar} handleDropdownChange={handleDropdownChange}/>
+            }
+        </div>
     );
 }
 
