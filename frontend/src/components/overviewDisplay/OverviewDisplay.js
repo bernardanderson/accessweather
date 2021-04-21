@@ -81,7 +81,7 @@ const OverviewDisplay = () => {
                         </div>
                         <hr />
                     </div>
-                    {/* <MapDisplay /> */}
+                    <MapDisplay />
                 </div>
                 {generateEdgeColumn(dailyTotalRainPressure)}
             </div>

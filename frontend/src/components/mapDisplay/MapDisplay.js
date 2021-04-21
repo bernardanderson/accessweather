@@ -32,7 +32,7 @@ const MapDisplay = () => {
             { showMap ? 
                 <img className="img-width" 
                         alt="Weather Map" 
-                        src={`http://radar.weather.gov/ridge/lite/N0R/${mapRadar}_loop.gif?${urlRandomizer}`} 
+                        src={`https://radblast.wunderground.com/cgi-bin/radar/WUNIDS_map?num=12&type=N0R&mapx=400&mapy=240&brand=wui&delay=30&frame=0&scale=1&transx=0&transy=0&severe=0&smooth=0&centerx=400&centery=240&station=OHX&rainsnow=0&lightning=0&noclutter=1&showlabels=1&showstorms=0&rand=${urlRandomizer}`} 
                         onClick={() => setShowMap(false)}
                 /> :
                 <MapSelector currentRadarValue={mapRadar} handleDropdownChange={handleDropdownChange}/>
