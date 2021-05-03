@@ -8,7 +8,7 @@ const App = () => {
     const setWeatherState = useSetRecoilState(weatherState);
 
     useEffect(()=> {
-        const socket = io('http://192.168.0.156:7024');
+        const socket = io('http://192.168.0.153:7024');
 
         socket.on('currentWeatherData', (data) => {
             setWeatherState(data);
