@@ -5,7 +5,7 @@ import './MapDisplay.scss';
 const randomizerValue = () => Math.random().toString().slice(2);
 
 const MapDisplay = () => {
-    const [mapRadar, setMapRadar] = useState('OHX');
+    const [mapRadar, setMapRadar] = useState('KOHX');
     const [urlRandomizer, setUrlRandomizer] = useState(randomizerValue);
     const [showMap, setShowMap] = useState(true);
 
@@ -32,7 +32,7 @@ const MapDisplay = () => {
             { showMap ? 
                 <img className="img-width" 
                         alt="Weather Map" 
-                        src={`https://radar.weather.gov/ridge/lite/KOHX_loop.gif&rand=${urlRandomizer}`} 
+                        src={`https://radar.weather.gov/ridge/lite/${mapRadar}_loop.gif?rand=${urlRandomizer}`} 
                         onClick={() => setShowMap(false)}
                 /> :
                 <MapSelector currentRadarValue={mapRadar} handleDropdownChange={handleDropdownChange}/>
