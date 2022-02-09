@@ -10,7 +10,7 @@
     "react-scripts": "^2.1.8",
     "recoil": "0.0.10",
     "socket.io": "^2.3.0",
-    "yarn": "^1.13.0"
+    "yarn": "^1.22.0"
   },
   "scripts": {
     "start": "react-scripts start",
